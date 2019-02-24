@@ -361,11 +361,11 @@ void MegaCmdListener::onRequestUpdate(MegaApi* api, MegaRequest *request)
             if (percentFetchnodes == 100 && !alreadyFinished)
             {
                 alreadyFinished = true;
-                cout << outputString << endl;
+		std::cout << outputString << std::endl;
             }
             else
             {
-                cout << outputString << '\r' << flush;
+		    std::cout << outputString << '\r' << std::flush;
             }
 
             informProgressUpdate(request->getTransferredBytes(), request->getTotalBytes(), this->clientID, "Fetching nodes");
@@ -502,11 +502,11 @@ void MegaCmdTransferListener::onTransferUpdate(MegaApi* api, MegaTransfer *trans
     if (percentDownloaded == 100 && !alreadyFinished)
     {
         alreadyFinished = true;
-        cout << outputString << endl;
+	std::cout << outputString << std::endl;
     }
     else
     {
-        cout << outputString << '\r' << flush;
+	    std::cout << outputString << '\r' << std::flush;
     }
 
     LOG_verbose << "onTransferUpdate transfer->getType(): " << transfer->getType() << " clientID=" << this->clientID;
@@ -664,7 +664,7 @@ void MegaCmdMultiTransferListener::onTransferUpdate(MegaApi* api, MegaTransfer *
     }
     sprintf(aux,"||(%lld/%lld MB: %.2f %%) ", (transferredbytes + getOngoingTransferredBytes()) / 1024 / 1024, (totalbytes + getOngoingTotalBytes() ) / 1024 / 1024, percentDownloaded);
     sprintf((char *)outputString.c_str() + cols - strlen(aux), "%s",                         aux);
-    for (int i = 0; i <= ( cols - strlen("TRANSFERRING ||") - strlen(aux)) * 1.0 * min (100.0f, percentDownloaded) / 100.0; i++)
+    for (int i = 0; i <= ( cols - strlen("TRANSFERRING ||") - strlen(aux)) * 1.0 * std::min (100.0f, percentDownloaded) / 100.0; i++)
     {
         *ptr++ = '#';
     }
@@ -672,11 +672,11 @@ void MegaCmdMultiTransferListener::onTransferUpdate(MegaApi* api, MegaTransfer *
     if (percentDownloaded == 100 && !alreadyFinished)
     {
         alreadyFinished = true;
-        cout << outputString << endl;
+	std::cout << outputString << std::endl;
     }
     else
     {
-        cout << outputString << '\r' << flush;
+	    std::cout << outputString << '\r' << std::flush;
     }
 
     LOG_verbose << "onTransferUpdate transfer->getType(): " << transfer->getType() << " clientID=" << this->clientID;

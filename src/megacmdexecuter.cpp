@@ -61,7 +61,7 @@ void MegaCmdExecuter::updateprompt(MegaApi *api, MegaHandle handle)
         const char *email = u->getEmail();
         strncpy(dynamicprompt, email, ( lastpos - ptraux ) / sizeof( dynamicprompt[0] ));
         ptraux += strlen(email);
-        ptraux = min(ptraux, lastpos - 2);
+        ptraux = std::min(ptraux, lastpos - 2);
         delete u;
     }
     if (n)
@@ -69,10 +69,10 @@ void MegaCmdExecuter::updateprompt(MegaApi *api, MegaHandle handle)
         char *np = api->getNodePath(n);
         if (ptraux!=dynamicprompt)
             *ptraux++ = ':';
-        ptraux = min(ptraux, lastpos - 2);
+        ptraux = std::min(ptraux, lastpos - 2);
         strncpy(ptraux, np, ( lastpos - ptraux ) / sizeof( dynamicprompt[0] ));
         ptraux += strlen(np);
-        ptraux = min(ptraux, lastpos - 2);
+        ptraux = std::min(ptraux, lastpos - 2);
         delete n;
         delete []np;
     }
@@ -83,10 +83,10 @@ void MegaCmdExecuter::updateprompt(MegaApi *api, MegaHandle handle)
     else
     {
         *ptraux++ = '$';
-        ptraux = min(ptraux, lastpos - 1);
+        ptraux = std::min(ptraux, lastpos - 1);
 
         *ptraux++ = ' ';
-        ptraux = min(ptraux, lastpos);
+        ptraux = std::min(ptraux, lastpos);
 
         *ptraux = '\0';
     }
@@ -131,7 +131,7 @@ void MegaCmdExecuter::listtrees()
 {
     for (int i = 0; i < (int)( sizeof rootnodenames / sizeof *rootnodenames ); i++)
     {
-        OUTSTREAM << rootnodenames[i] << " on " << rootnodepaths[i] << endl;
+        OUTSTREAM << rootnodenames[i] << " on " << rootnodepaths[i] << std::endl;
         if (!api->isLoggedIn())
         {
             break;                     //only show /root
@@ -144,7 +144,7 @@ void MegaCmdExecuter::listtrees()
         MegaShare *share = msl->get(i);
         MegaNode *n = api->getNodeByHandle(share->getNodeHandle());
 
-        OUTSTREAM << "INSHARE on " << share->getUser() << ":" << n->getName() << " (" << getAccessLevelStr(share->getAccess()) << ")" << endl;
+        OUTSTREAM << "INSHARE on " << share->getUser() << ":" << n->getName() << " (" << getAccessLevelStr(share->getAccess()) << ")" << std::endl;
         delete n;
     }
 
@@ -1550,7 +1550,7 @@ void MegaCmdExecuter::dumpNode(MegaNode* n, int extended_info, bool showversions
         OUTSTREAM << ")" << ( n->isRemoved() ? " (DELETED)" : "" );
     }
 
-    OUTSTREAM << endl;
+    OUTSTREAM << std::endl;
 
     if (showversions && n->getType() == MegaNode::TYPE_FILE)
     {
@@ -1576,7 +1576,7 @@ void MegaCmdExecuter::dumpNode(MegaNode* n, int extended_info, bool showversions
                     {
                         OUTSTREAM << " (" << sizeToText(versionNode->getSize(), false) << ")";
                     }
-                    OUTSTREAM << endl;
+                    OUTSTREAM << std::endl;
                 }
             }
         }
@@ -1594,7 +1594,7 @@ void MegaCmdExecuter::dumpNodeSummaryHeader()
     OUTSTREAM << getFixLengthString("DATE      ", 18, ' ', true);
     OUTSTREAM << " ";
     OUTSTREAM << "NAME";
-    OUTSTREAM << endl;
+    OUTSTREAM << std::endl;
 }
 
 void MegaCmdExecuter::dumpNodeSummary(MegaNode *n, bool humanreadable, const char *title)
@@ -1707,7 +1707,7 @@ void MegaCmdExecuter::dumpNodeSummary(MegaNode *n, bool humanreadable, const cha
 
 
     OUTSTREAM << " " << title;
-    OUTSTREAM << endl;
+    OUTSTREAM << std::endl;
 }
 
 
@@ -1815,7 +1815,7 @@ void MegaCmdExecuter::createOrModifyBackup(string local, string remote, string s
                 mtxBackupsMap.unlock();
                 OUTSTREAM << "Backup established: " << local << " into " << remote << " period="
                           << ((period != -1)?getReadablePeriod(period/10):"\""+speriod+"\"")
-                          << " Number-of-Backups=" << numBackups << endl;
+                          << " Number-of-Backups=" << numBackups << std::endl;
             }
         }
         delete n;
@@ -1929,12 +1929,12 @@ void MegaCmdExecuter::dumpTreeSummary(MegaNode *n, int recurse, bool show_versio
         {
             if (depth)
             {
-                OUTSTREAM << endl;
+                OUTSTREAM << std::endl;
             }
 
             if (recurse)
             {
-                OUTSTREAM << pathToShow << ":" << endl;
+                OUTSTREAM << pathToShow << ":" << std::endl;
             }
 
             for (int i = 0; i < children->size(); i++)
@@ -1951,7 +1951,7 @@ void MegaCmdExecuter::dumpTreeSummary(MegaNode *n, int recurse, bool show_versio
                     MegaNodeList *vers = api->getVersions(c);
                     if (vers &&  vers->size() > 1)
                     {
-                        OUTSTREAM << endl << "Versions of " << pathToShow << "/" << c->getName() << ":" << endl;
+                        OUTSTREAM << std::endl << "Versions of " << pathToShow << "/" << c->getName() << ":" << std::endl;
 
                         for (int i = 0; i < vers->size(); i++)
                         {
@@ -1985,7 +1985,7 @@ void MegaCmdExecuter::dumpTreeSummary(MegaNode *n, int recurse, bool show_versio
                 MegaNodeList *vers = api->getVersions(n);
                 if (vers &&  vers->size() > 1)
                 {
-                    OUTSTREAM << endl << "Versions of " << pathToShow << ":" << endl;
+                    OUTSTREAM << std::endl << "Versions of " << pathToShow << ":" << std::endl;
 
                     for (int i = 0; i < vers->size(); i++)
                     {
@@ -2198,11 +2198,11 @@ void MegaCmdExecuter::listnodeshares(MegaNode* n, string name)
             if (outShares->get(i))
             {
                 OUTSTREAM << ", shared with " << outShares->get(i)->getUser() << " (" << getAccessLevelStr(outShares->get(i)->getAccess()) << ")"
-                          << endl;
+                          << std::endl;
             }
             else
             {
-                OUTSTREAM << ", shared as exported folder link" << endl;
+                OUTSTREAM << ", shared as exported folder link" << std::endl;
             }
         }
 
@@ -2297,7 +2297,7 @@ void MegaCmdExecuter::changePassword(const char *oldpassword, const char *newpas
     }
     else
     {
-        OUTSTREAM << "Password changed succesfully" << endl;
+        OUTSTREAM << "Password changed succesfully" << std::endl;
     }
     delete megaCmdListener;
 }
@@ -2329,14 +2329,14 @@ void MegaCmdExecuter::actUponGetExtendedAccountDetails(SynchronousRequestListene
         {
             OUTSTREAM << "    Available storage:"
                       << getFixLengthString(sizeToText(details->getStorageMax()), 9, ' ', true)
-                      << "ytes" << endl;
+                      << "ytes" << std::endl;
             MegaNode *n = api->getRootNode();
             if (n)
             {
                 OUTSTREAM << "        In ROOT:      "
                           << getFixLengthString(sizeToText(details->getStorageUsed(n->getHandle())), 9, ' ', true) << "ytes in "
                           << getFixLengthString(SSTR(details->getNumFiles(n->getHandle())),5,' ',true) << " file(s) and "
-                          << getFixLengthString(SSTR(details->getNumFolders(n->getHandle())),5,' ',true) << " folder(s)" << endl;
+                          << getFixLengthString(SSTR(details->getNumFolders(n->getHandle())),5,' ',true) << " folder(s)" << std::endl;
                 delete n;
             }
 
@@ -2346,7 +2346,7 @@ void MegaCmdExecuter::actUponGetExtendedAccountDetails(SynchronousRequestListene
                 OUTSTREAM << "        In INBOX:     "
                           << getFixLengthString( sizeToText(details->getStorageUsed(n->getHandle())), 9, ' ', true ) << "ytes in "
                           << getFixLengthString(SSTR(details->getNumFiles(n->getHandle())),5,' ',true) << " file(s) and "
-                          << getFixLengthString(SSTR(details->getNumFolders(n->getHandle())),5,' ',true) << " folder(s)" << endl;
+                          << getFixLengthString(SSTR(details->getNumFolders(n->getHandle())),5,' ',true) << " folder(s)" << std::endl;
                 delete n;
             }
 
@@ -2356,14 +2356,14 @@ void MegaCmdExecuter::actUponGetExtendedAccountDetails(SynchronousRequestListene
                 OUTSTREAM << "        In RUBBISH:   "
                           << getFixLengthString(sizeToText(details->getStorageUsed(n->getHandle())), 9, ' ', true) << "ytes in "
                           << getFixLengthString(SSTR(details->getNumFiles(n->getHandle())),5,' ',true) << " file(s) and "
-                          << getFixLengthString(SSTR(details->getNumFolders(n->getHandle())),5,' ',true) << " folder(s)" << endl;
+                          << getFixLengthString(SSTR(details->getNumFolders(n->getHandle())),5,' ',true) << " folder(s)" << std::endl;
                 delete n;
             }
 
             long long usedinVersions = details->getVersionStorageUsed();
 
             OUTSTREAM << "        Total size taken up by file versions: "
-                      << getFixLengthString(sizeToText(usedinVersions), 12, ' ', true) << "ytes"<< endl;
+                      << getFixLengthString(sizeToText(usedinVersions), 12, ' ', true) << "ytes"<< std::endl;
 
 
             MegaNodeList *inshares = api->getInShares();
@@ -2373,36 +2373,36 @@ void MegaCmdExecuter::actUponGetExtendedAccountDetails(SynchronousRequestListene
                 {
                     n = inshares->get(i);
                     OUTSTREAM << "        In INSHARE " << n->getName() << ": " << details->getStorageUsed(n->getHandle()) << " byte(s) in "
-                              << details->getNumFiles(n->getHandle()) << " file(s) and " << details->getNumFolders(n->getHandle()) << " folder(s)" << endl;
+                              << details->getNumFiles(n->getHandle()) << " file(s) and " << details->getNumFolders(n->getHandle()) << " folder(s)" << std::endl;
                 }
             }
             delete inshares;
 
-            OUTSTREAM << "    Pro level: " << details->getProLevel() << endl;
+            OUTSTREAM << "    Pro level: " << details->getProLevel() << std::endl;
             if (details->getProLevel())
             {
                 if (details->getProExpiration())
                 {
                     time_t ts = details->getProExpiration();
                     strftime(timebuf, sizeof timebuf, "%c", localtime(&ts));
-                    OUTSTREAM << "        " << "Pro expiration date: " << timebuf << endl;
+                    OUTSTREAM << "        " << "Pro expiration date: " << timebuf << std::endl;
                 }
             }
             char * subscriptionMethod = details->getSubscriptionMethod();
-            OUTSTREAM << "    Subscription type: " << subscriptionMethod << endl;
+            OUTSTREAM << "    Subscription type: " << subscriptionMethod << std::endl;
             delete []subscriptionMethod;
-            OUTSTREAM << "    Account balance:" << endl;
+            OUTSTREAM << "    Account balance:" << std::endl;
             for (int i = 0; i < details->getNumBalances(); i++)
             {
                 MegaAccountBalance * balance = details->getBalance(i);
                 char sbalance[50];
                 sprintf(sbalance, "    Balance: %.3s %.02f", balance->getCurrency(), balance->getAmount());
-                OUTSTREAM << "    " << "Balance: " << sbalance << endl;
+                OUTSTREAM << "    " << "Balance: " << sbalance << std::endl;
             }
 
             if (details->getNumPurchases())
             {
-                OUTSTREAM << "Purchase history:" << endl;
+                OUTSTREAM << "Purchase history:" << std::endl;
                 for (int i = 0; i < details->getNumPurchases(); i++)
                 {
                     MegaAccountPurchase *purchase = details->getPurchase(i);
@@ -2413,13 +2413,13 @@ void MegaCmdExecuter::actUponGetExtendedAccountDetails(SynchronousRequestListene
                     strftime(timebuf, sizeof timebuf, "%c", localtime(&ts));
                     sprintf(spurchase, "ID: %.11s Time: %s Amount: %.3s %.02f Payment method: %d\n",
                         purchase->getHandle(), timebuf, purchase->getCurrency(), purchase->getAmount(), purchase->getMethod());
-                    OUTSTREAM << "    " << spurchase << endl;
+                    OUTSTREAM << "    " << spurchase << std::endl;
                 }
             }
 
             if (details->getNumTransactions())
             {
-                OUTSTREAM << "Transaction history:" << endl;
+                OUTSTREAM << "Transaction history:" << std::endl;
                 for (int i = 0; i < details->getNumTransactions(); i++)
                 {
                     MegaAccountTransaction *transaction = details->getTransaction(i);
@@ -2428,12 +2428,12 @@ void MegaCmdExecuter::actUponGetExtendedAccountDetails(SynchronousRequestListene
                     strftime(timebuf, sizeof timebuf, "%c", localtime(&ts));
                     sprintf(stransaction, "ID: %.11s Time: %s Amount: %.3s %.02f\n",
                         transaction->getHandle(), timebuf, transaction->getCurrency(), transaction->getAmount());
-                    OUTSTREAM << "    " << stransaction << endl;
+                    OUTSTREAM << "    " << stransaction << std::endl;
                 }
             }
 
             int alive_sessions = 0;
-            OUTSTREAM << "Current Active Sessions:" << endl;
+            OUTSTREAM << "Current Active Sessions:" << std::endl;
             char sdetails[500];
             for (int i = 0; i < details->getNumSessions(); i++)
             {
@@ -2478,7 +2478,7 @@ void MegaCmdExecuter::actUponGetExtendedAccountDetails(SynchronousRequestListene
 
             if (alive_sessions)
             {
-                OUTSTREAM << alive_sessions << " active sessions opened" << endl;
+                OUTSTREAM << alive_sessions << " active sessions opened" << std::endl;
             }
             delete details;
         }
@@ -2711,10 +2711,10 @@ void MegaCmdExecuter::actUponLogin(SynchronousRequestListener *srl, int timeout)
     {
         if (megaCmdListener->getRequest()->getNumber() != MEGACMD_CODE_VERSION)
         {
-            OUTSTREAM << "---------------------------------------------------------------------" << endl;
-            OUTSTREAM << "--        There is a new version available of megacmd: " << setw(12) << left << megaCmdListener->getRequest()->getName() << "--" << endl;
-            OUTSTREAM << "--        Please, download it from https://mega.nz/cmd             --" << endl;
-            OUTSTREAM << "---------------------------------------------------------------------" << endl;
+            OUTSTREAM << "---------------------------------------------------------------------" << std::endl;
+            OUTSTREAM << "--        There is a new version available of megacmd: " << std::setw(12) << std::left << megaCmdListener->getRequest()->getName() << "--" << std::endl;
+            OUTSTREAM << "--        Please, download it from https://mega.nz/cmd             --" << std::endl;
+            OUTSTREAM << "---------------------------------------------------------------------" << std::endl;
         }
     }
     delete megaCmdListener;
@@ -3067,7 +3067,7 @@ void MegaCmdExecuter::downloadNode(string path, MegaApi* api, MegaNode *node, bo
             delete megaCmdListener;
         }
 
-        OUTSTREAM << "Transfer not started. " << endl;
+        OUTSTREAM << "Transfer not started. " << std::endl;
         if (sandboxCMD->istemporalbandwidthvalid)
         {
             OUTSTREAM << "You have utilized " << sizeToText(sandboxCMD->temporalbandwidth) << " of data transfer in the last "
@@ -3082,8 +3082,8 @@ void MegaCmdExecuter::downloadNode(string path, MegaApi* api, MegaNode *node, bo
                   "you can upgrade to Pro, which will give you your own bandwidth "
                   "package and also ample extra storage space. "
                      "Alternatively, you can try again in " << secondsToText(sandboxCMD->secondsOverQuota-(ts-sandboxCMD->timeOfOverquota)) <<
-                     "." << endl << "See \"help --upgrade\" for further details" << endl;
-        OUTSTREAM << "Use --ignore-quota-warn to initiate nevertheless" << endl;
+                     "." << std::endl << "See \"help --upgrade\" for further details" << std::endl;
+        OUTSTREAM << "Use --ignore-quota-warn to initiate nevertheless" << std::endl;
         return;
     }
 
@@ -3097,7 +3097,7 @@ void MegaCmdExecuter::downloadNode(string path, MegaApi* api, MegaNode *node, bo
             if (megaCmdListener->getRequest() && megaCmdListener->getRequest()->getFlag() )
             {
                 OUTSTREAM << "Transfer not started: proceding will exceed transfer quota. "
-                             "Use --ignore-quota-warn to initiate nevertheless" << endl;
+                             "Use --ignore-quota-warn to initiate nevertheless" << std::endl;
                 return;
             }
         }
@@ -3152,7 +3152,7 @@ void MegaCmdExecuter::uploadNode(string path, MegaApi* api, MegaNode *node, stri
 //            if (megaCmdListener->getRequest() && megaCmdListener->getRequest()->getFlag() )
 //            {
 //                OUTSTREAM << "Transfer not started: proceding will exceed bandwith quota. "
-//                             "Use --ignore-quota-warn to initiate nevertheless" << endl;
+//                             "Use --ignore-quota-warn to initiate nevertheless" << std::endl;
 //                return;
 //            }
 //        }
@@ -3259,7 +3259,7 @@ void MegaCmdExecuter::exportNode(MegaNode *n, int64_t expireTime, bool force)
                 {
                     OUTSTREAM << " expires at " << getReadableTime(nexported->getExpirationTime());
                 }
-                OUTSTREAM << endl;
+                OUTSTREAM << std::endl;
                 delete[] nodepath;
                 delete[] publiclink;
                 delete nexported;
@@ -3292,7 +3292,7 @@ void MegaCmdExecuter::disableExport(MegaNode *n)
         if (nexported)
         {
             char *nodepath = api->getNodePath(nexported);
-            OUTSTREAM << "Disabled export: " << nodepath << endl;
+            OUTSTREAM << "Disabled export: " << nodepath << std::endl;
             delete[] nodepath;
             delete nexported;
         }
@@ -3320,12 +3320,12 @@ void MegaCmdExecuter::shareNode(MegaNode *n, string with, int level)
             char *nodepath = api->getNodePath(nshared);
             if (megaCmdListener->getRequest()->getAccess() == MegaShare::ACCESS_UNKNOWN)
             {
-                OUTSTREAM << "Stopped sharing " << nodepath << " with " << megaCmdListener->getRequest()->getEmail() << endl;
+                OUTSTREAM << "Stopped sharing " << nodepath << " with " << megaCmdListener->getRequest()->getEmail() << std::endl;
             }
             else
             {
                 OUTSTREAM << "Shared " << nodepath << " : " << megaCmdListener->getRequest()->getEmail()
-                          << " accessLevel=" << megaCmdListener->getRequest()->getAccess() << endl;
+                          << " accessLevel=" << megaCmdListener->getRequest()->getAccess() << std::endl;
             }
             delete[] nodepath;
             delete nshared;
@@ -3624,7 +3624,7 @@ void MegaCmdExecuter::signup(string name, string passwd, string email)
     megaCmdListener->wait();
     if (checkNoErrors(megaCmdListener->getError(), "create account <" + email + ">"))
     {
-        OUTSTREAM << "Account <" << email << "> created succesfully. You will receive a confirmation link. Use \"confirm\" with the provided link to confirm that account" << endl;
+        OUTSTREAM << "Account <" << email << "> created succesfully. You will receive a confirmation link. Use \"confirm\" with the provided link to confirm that account" << std::endl;
     }
 
     delete megaCmdListener;
@@ -3652,7 +3652,7 @@ void MegaCmdExecuter::confirm(string passwd, string email, string link)
     }
     else if (checkNoErrors(megaCmdListener2->getError(), "confirm account"))
     {
-        OUTSTREAM << "Account " << email << " confirmed succesfully. You can login with it now" << endl;
+        OUTSTREAM << "Account " << email << " confirmed succesfully. You can login with it now" << std::endl;
     }
 
     delete megaCmdListener2;
@@ -3685,7 +3685,7 @@ void MegaCmdExecuter::printTransfersHeader(const unsigned int PATHSIZE, bool pri
     {
         OUTSTREAM  << "  " << "STATE";
     }
-    OUTSTREAM << endl;
+    OUTSTREAM << std::endl;
 }
 
 void MegaCmdExecuter::printTransfer(MegaTransfer *transfer, const unsigned int PATHSIZE, bool printstate)
@@ -3790,7 +3790,7 @@ void MegaCmdExecuter::printTransfer(MegaTransfer *transfer, const unsigned int P
         OUTSTREAM << "  " << getTransferStateStr(transfer->getState());
     }
 
-    OUTSTREAM << endl;
+    OUTSTREAM << std::endl;
 }
 
 void MegaCmdExecuter::printSyncHeader(const unsigned int PATHSIZE)
@@ -3804,7 +3804,7 @@ void MegaCmdExecuter::printSyncHeader(const unsigned int PATHSIZE)
     OUTSTREAM << getRightAlignedString("SIZE", 8) << " ";
     OUTSTREAM << getRightAlignedString("FILES", 6) << " ";
     OUTSTREAM << getRightAlignedString("DIRS", 6);
-    OUTSTREAM << endl;
+    OUTSTREAM << std::endl;
 
 }
 
@@ -3816,7 +3816,7 @@ void MegaCmdExecuter::printBackupHeader(const unsigned int PATHSIZE)
     OUTSTREAM << getFixLengthString("LOCALPATH ", PATHSIZE) << " ";
     OUTSTREAM << getFixLengthString("REMOTEPARENTPATH ", PATHSIZE) << " ";
     OUTSTREAM << getRightAlignedString("STATUS", 14);
-    OUTSTREAM << endl;
+    OUTSTREAM << std::endl;
 }
 
 
@@ -3826,7 +3826,7 @@ void MegaCmdExecuter::printBackupSummary(int tag, const char * localfolder, cons
               << getFixLengthString(localfolder, PATHSIZE) << " "
               << getFixLengthString((remoteparentfolder?remoteparentfolder:"INVALIDPATH"), PATHSIZE) << " "
               << getRightAlignedString(status, 14)
-              << endl;
+              << std::endl;
 }
 
 void MegaCmdExecuter::printBackupDetails(MegaBackup *backup)
@@ -3834,16 +3834,16 @@ void MegaCmdExecuter::printBackupDetails(MegaBackup *backup)
     if (backup)
     {
         string speriod = (backup->getPeriod() == -1)?backup->getPeriodString():getReadablePeriod(backup->getPeriod()/10);
-        OUTSTREAM << "  Max Backups:   " << backup->getMaxBackups() << endl;
-        OUTSTREAM << "  Period:         " << "\"" << speriod << "\"" << endl;
+        OUTSTREAM << "  Max Backups:   " << backup->getMaxBackups() << std::endl;
+        OUTSTREAM << "  Period:         " << "\"" << speriod << "\"" << std::endl;
         OUTSTREAM << "  Next backup scheduled for: " << getReadableTime(backup->getNextStartTime());
 
-        OUTSTREAM << endl;
-        OUTSTREAM << "  " << " -- CURRENT/LAST BACKUP --" << endl;
+        OUTSTREAM << std::endl;
+        OUTSTREAM << "  " << " -- CURRENT/LAST BACKUP --" << std::endl;
         OUTSTREAM << "  " << getFixLengthString("FILES UP/TOT", 15);
         OUTSTREAM << "  " << getFixLengthString("FOLDERS CREATED", 15);
         OUTSTREAM << "  " << getRightAlignedString("PROGRESS", 10);
-        OUTSTREAM << endl;
+        OUTSTREAM << std::endl;
 
         string sfiles = SSTR(backup->getNumberFiles()) + "/" + SSTR(backup->getTotalFiles());
         OUTSTREAM << "  " << getRightAlignedString(sfiles, 8) << "       ";
@@ -3854,7 +3854,7 @@ void MegaCmdExecuter::printBackupDetails(MegaBackup *backup)
 
         string sprogress = sizeProgressToText(trabytes, totbytes) + "  " + percentageToText(percent);
         OUTSTREAM << "  " << getRightAlignedString(sprogress,10);
-        OUTSTREAM << endl;
+        OUTSTREAM << std::endl;
     }
 }
 
@@ -3868,7 +3868,7 @@ void MegaCmdExecuter::printBackupHistory(MegaBackup *backup, MegaNode *parentnod
         {
             if (firstinhistory)
             {
-                OUTSTREAM << "  " << " -- SAVED BACKUPS --" << endl;
+                OUTSTREAM << "  " << " -- SAVED BACKUPS --" << std::endl;
 
                 // print header
                 OUTSTREAM << "  " << getFixLengthString("NAME", PATHSIZE) << " ";
@@ -3876,7 +3876,7 @@ void MegaCmdExecuter::printBackupHistory(MegaBackup *backup, MegaNode *parentnod
                 OUTSTREAM << getRightAlignedString("STATUS", 11)<< " ";
                 OUTSTREAM << getRightAlignedString("FILES", 6)<< " ";
                 OUTSTREAM << getRightAlignedString("FOLDERS", 7);
-                OUTSTREAM << endl;
+                OUTSTREAM << std::endl;
 
                 firstinhistory = false;
             }
@@ -3927,7 +3927,7 @@ void MegaCmdExecuter::printBackupHistory(MegaBackup *backup, MegaNode *parentnod
             OUTSTREAM << getRightAlignedString(SSTR(nfiles), 6)<< " ";
             OUTSTREAM << getRightAlignedString(SSTR(nfolders), 7);
             //OUTSTREAM << getRightAlignedString("PROGRESS", 10);// some info regarding progress or the like in case of failure could be interesting. Although we don't know total files/folders/bytes
-            OUTSTREAM << endl;
+            OUTSTREAM << std::endl;
 
         }
         delete msl;
@@ -3974,7 +3974,7 @@ void MegaCmdExecuter::printBackup(int tag, MegaBackup *backup, const unsigned in
     }
     else
     {
-        OUTSTREAM << "BACKUP not found " << endl;
+        OUTSTREAM << "BACKUP not found " << std::endl;
     }
 }
 
@@ -3990,7 +3990,7 @@ void MegaCmdExecuter::printBackup(backup_struct *backupstruct, const unsigned in
         }
         else
         {
-            OUTSTREAM << "BACKUP not found: " << backupstruct->tag << endl;
+            OUTSTREAM << "BACKUP not found: " << backupstruct->tag << std::endl;
         }
     }
     else
@@ -3999,8 +3999,8 @@ void MegaCmdExecuter::printBackup(backup_struct *backupstruct, const unsigned in
         if (extendedinfo)
         {
             string speriod = (backupstruct->period == -1)?backupstruct->speriod:getReadablePeriod(backupstruct->period/10);
-            OUTSTREAM << "         Period: " << "\"" << speriod << "\"" << endl;
-            OUTSTREAM << "   Max. Backups: " << backupstruct->numBackups << endl;
+            OUTSTREAM << "         Period: " << "\"" << speriod << "\"" << std::endl;
+            OUTSTREAM << "   Max. Backups: " << backupstruct->numBackups << std::endl;
         }
     }
 }
@@ -4058,7 +4058,7 @@ void MegaCmdExecuter::printSync(int i, string key, const char *nodepath, sync_st
     OUTSTREAM << getRightAlignedString(SSTR(nfiles),6) << " ";
     OUTSTREAM << getRightAlignedString(SSTR(nfolders),6) << " ";
 
-    OUTSTREAM << endl;
+    OUTSTREAM << std::endl;
 
 }
 
@@ -4103,7 +4103,7 @@ void MegaCmdExecuter::doFind(MegaNode* nodeBase, string word, int printfileinfo,
             }
             else
             {
-                OUTSTREAM << pathToShow << endl;
+                OUTSTREAM << pathToShow << std::endl;
             }
             //notice: some nodes may be dumped twice
 
@@ -4484,7 +4484,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
                             {
                                 if (!n->getType() == MegaNode::TYPE_FILE)
                                 {
-                                    OUTSTREAM << nodepath << ": " << endl;
+                                    OUTSTREAM << nodepath << ": " << std::endl;
                                 }
                                 if (summary)
                                 {
@@ -4501,7 +4501,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
                                 }
                                 if (( !n->getType() == MegaNode::TYPE_FILE ) && (( it + 1 ) != pathsToList->end()))
                                 {
-                                    OUTSTREAM << endl;
+                                    OUTSTREAM << std::endl;
                                 }
                                 delete n;
                             }
@@ -5058,7 +5058,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
                                 {
                                     OUTSTREAM << getFixLengthString("S.WITH VERS", 12, ' ', true);;
                                 }
-                                OUTSTREAM << endl;
+                                OUTSTREAM << std::endl;
                                 firstone = false;
                             }
                             currentSize = api->getSize(n);
@@ -5073,7 +5073,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
                                 totalVersionsSize += sizeWithVersions;
                             }
 
-                            OUTSTREAM << endl;
+                            OUTSTREAM << std::endl;
                             delete n;
                         }
                     }
@@ -5103,7 +5103,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
                         {
                             OUTSTREAM << getFixLengthString("S.WITH VERS", 12, ' ', true);;
                         }
-                        OUTSTREAM << endl;
+                        OUTSTREAM << std::endl;
                         firstone = false;
                     }
 
@@ -5114,7 +5114,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
                         OUTSTREAM << getFixLengthString(sizeToText(sizeWithVersions, true, humanreadable), 12, ' ', true);
                         totalVersionsSize += sizeWithVersions;
                     }
-                    OUTSTREAM << endl;
+                    OUTSTREAM << std::endl;
 
                 }
                 delete n;
@@ -5123,15 +5123,15 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
 
         if (!firstone)
         {
-            OUTSTREAM << "----------------------------------------------------------------" << endl;
+            OUTSTREAM << "----------------------------------------------------------------" << std::endl;
 
             OUTSTREAM << getFixLengthString("Total storage used:",40) << getFixLengthString(sizeToText(totalSize, true, humanreadable), 12, ' ', true);
-            //OUTSTREAM << "Total storage used: " << setw(22) << sizeToText(totalSize, true, humanreadable);
+            //OUTSTREAM << "Total storage used: " << std::setw(22) << sizeToText(totalSize, true, humanreadable);
             if (show_versions_size)
             {
                 OUTSTREAM << getFixLengthString(sizeToText(totalVersionsSize, true, humanreadable), 12, ' ', true);
             }
-            OUTSTREAM << endl;
+            OUTSTREAM << std::endl;
         }
         return;
     }
@@ -5537,7 +5537,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
         {
             // get screen size for output purposes
             unsigned int width = getNumberOfCols(75);
-            PATHSIZE = min(60,int((width-46)/2));
+            PATHSIZE = std::min(60,int((width-46)/2));
         }
 
         bool firstbackup = true;
@@ -5591,7 +5591,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
                         mtxBackupsMap.lock();
                         ConfigurationManager::saveBackups(&ConfigurationManager::configuredBackups);
                         mtxBackupsMap.unlock();
-                        OUTSTREAM << " Backup removed succesffuly: " << local << endl;
+                        OUTSTREAM << " Backup removed succesffuly: " << local << std::endl;
                     }
                 }
                 else if (abort)
@@ -5601,7 +5601,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
                     megaCmdListener->wait();
                     if (checkNoErrors(megaCmdListener->getError(), "abort backup"))
                     {
-                        OUTSTREAM << " Backup aborted succesffuly: " << local << endl;
+                        OUTSTREAM << " Backup aborted succesffuly: " << local << std::endl;
                     }
                 }
                 else
@@ -5644,7 +5644,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
             if (!ConfigurationManager::configuredBackups.size())
             {
                 setCurrentOutCode(MCMD_NOTFOUND);
-                OUTSTREAM << "No backup configured. " << endl << " Usage: " << getUsageStr("backup") << endl;
+                OUTSTREAM << "No backup configured. " << std::endl << " Usage: " << getUsageStr("backup") << std::endl;
             }
             mtxBackupsMap.unlock();
 
@@ -5709,7 +5709,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
             {
                 if (n->getType() != MegaNode::TYPE_FILE)
                 {
-                    for (int i = 1; i < max(1, (int)words.size() - 1); i++)
+                    for (int i = 1; i < std::max(1, (int)words.size() - 1); i++)
                     {
                         if (words[i] == ".")
                         {
@@ -5756,39 +5756,39 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
         {
             if (!getFlag(clflags, "s") && !getFlag(clflags, "c"))
             {
-                OUTSTREAM << "CMD log level = " << getLogLevelStr(loggerCMD->getCmdLoggerLevel()) << endl;
-                OUTSTREAM << "SDK log level = " << getLogLevelStr(loggerCMD->getApiLoggerLevel()) << endl;
+                OUTSTREAM << "CMD log level = " << getLogLevelStr(loggerCMD->getCmdLoggerLevel()) << std::endl;
+                OUTSTREAM << "SDK log level = " << getLogLevelStr(loggerCMD->getApiLoggerLevel()) << std::endl;
             }
             else if (getFlag(clflags, "s"))
             {
-                OUTSTREAM << "SDK log level = " << getLogLevelStr(loggerCMD->getApiLoggerLevel()) << endl;
+                OUTSTREAM << "SDK log level = " << getLogLevelStr(loggerCMD->getApiLoggerLevel()) << std::endl;
             }
             else if (getFlag(clflags, "c"))
             {
-                OUTSTREAM << "CMD log level = " << getLogLevelStr(loggerCMD->getCmdLoggerLevel()) << endl;
+                OUTSTREAM << "CMD log level = " << getLogLevelStr(loggerCMD->getCmdLoggerLevel()) << std::endl;
             }
         }
         else
         {
             int newLogLevel = getLogLevelNum(words[1].c_str());
-            newLogLevel = max(newLogLevel, (int)MegaApi::LOG_LEVEL_FATAL);
-            newLogLevel = min(newLogLevel, (int)MegaApi::LOG_LEVEL_MAX);
+            newLogLevel = std::max(newLogLevel, (int)MegaApi::LOG_LEVEL_FATAL);
+            newLogLevel = std::min(newLogLevel, (int)MegaApi::LOG_LEVEL_MAX);
             if (!getFlag(clflags, "s") && !getFlag(clflags, "c"))
             {
                 loggerCMD->setCmdLoggerLevel(newLogLevel);
                 loggerCMD->setApiLoggerLevel(newLogLevel);
-                OUTSTREAM << "CMD log level = " << getLogLevelStr(loggerCMD->getCmdLoggerLevel()) << endl;
-                OUTSTREAM << "SDK log level = " << getLogLevelStr(loggerCMD->getApiLoggerLevel()) << endl;
+                OUTSTREAM << "CMD log level = " << getLogLevelStr(loggerCMD->getCmdLoggerLevel()) << std::endl;
+                OUTSTREAM << "SDK log level = " << getLogLevelStr(loggerCMD->getApiLoggerLevel()) << std::endl;
             }
             else if (getFlag(clflags, "s"))
             {
                 loggerCMD->setApiLoggerLevel(newLogLevel);
-                OUTSTREAM << "SDK log level = " << getLogLevelStr(loggerCMD->getApiLoggerLevel()) << endl;
+                OUTSTREAM << "SDK log level = " << getLogLevelStr(loggerCMD->getApiLoggerLevel()) << std::endl;
             }
             else if (getFlag(clflags, "c"))
             {
                 loggerCMD->setCmdLoggerLevel(newLogLevel);
-                OUTSTREAM << "CMD log level = " << getLogLevelStr(loggerCMD->getCmdLoggerLevel()) << endl;
+                OUTSTREAM << "CMD log level = " << getLogLevelStr(loggerCMD->getCmdLoggerLevel()) << std::endl;
             }
         }
 
@@ -5804,7 +5804,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
         }
         string cwpath = getCurrentPath();
 
-        OUTSTREAM << cwpath << endl;
+        OUTSTREAM << cwpath << std::endl;
 
         return;
     }
@@ -5836,7 +5836,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
     {
         string absolutePath = getLPWD();
 
-        OUTSTREAM << absolutePath << endl;
+        OUTSTREAM << absolutePath << std::endl;
         return;
     }
     else if (words[0] == "ipc")
@@ -5893,7 +5893,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
                 megaCmdListener->wait();
                 if (checkNoErrors(megaCmdListener->getError(), "reply ipc"))
                 {
-                    OUTSTREAM << saction << "ed invitation by " << cr->getSourceEmail() << endl;
+                    OUTSTREAM << saction << "ed invitation by " << cr->getSourceEmail() << std::endl;
                 }
                 delete megaCmdListener;
                 delete cr;
@@ -5922,7 +5922,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
             megaCmdListener->wait();
             if (checkNoErrors(megaCmdListener->getError(), "change https"))
             {
-                OUTSTREAM << "File transfer now uses " << (api->usingHttpsOnly()?"HTTPS":"HTTP") << endl;
+                OUTSTREAM << "File transfer now uses " << (api->usingHttpsOnly()?"HTTPS":"HTTP") << std::endl;
                 ConfigurationManager::savePropertyValue("https", api->usingHttpsOnly());
             }
             delete megaCmdListener;
@@ -5936,7 +5936,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
         }
         else
         {
-            OUTSTREAM << "File transfer is done using " << (api->usingHttpsOnly()?"HTTPS":"HTTP") << endl;
+            OUTSTREAM << "File transfer is done using " << (api->usingHttpsOnly()?"HTTPS":"HTTP") << std::endl;
         }
         return;
     }
@@ -5995,7 +5995,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
             int group  = (filepermissions >> 3) & 0x07;
             int others = filepermissions & 0x07;
 
-            OUTSTREAM << "Default files permissions: " << owner << group << others << endl;
+            OUTSTREAM << "Default files permissions: " << owner << group << others << std::endl;
         }
         if (foldersflag)
         {
@@ -6008,7 +6008,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
             int owner  = (folderpermissions >> 6) & 0x07;
             int group  = (folderpermissions >> 3) & 0x07;
             int others = folderpermissions & 0x07;
-            OUTSTREAM << "Default folders permissions: " << owner << group << others << endl;
+            OUTSTREAM << "Default folders permissions: " << owner << group << others << std::endl;
         }
     }
 #endif
@@ -6040,7 +6040,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
                 megaCmdListener->wait();
                 if (checkNoErrors(megaCmdListener->getError(), "remove all versions"))
                 {
-                    OUTSTREAM << "File versions deleted succesfully. Please note that the current files were not deleted, just their history." << endl;
+                    OUTSTREAM << "File versions deleted succesfully. Please note that the current files were not deleted, just their history." << std::endl;
                 }
                 delete megaCmdListener;
             }
@@ -6120,11 +6120,11 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
                         {
                             if (!found)
                             {
-                                OUTSTREAM << "WEBDAV SERVED LOCATIONS:" << endl;
+                                OUTSTREAM << "WEBDAV SERVED LOCATIONS:" << std::endl;
                             }
                             found = true;
                             char * nodepath = api->getNodePath(n);
-                            OUTSTREAM << nodepath << ": " << link << endl;
+                            OUTSTREAM << nodepath << ": " << link << std::endl;
                             delete []nodepath;
                             delete []link;
                         }
@@ -6133,7 +6133,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
 
                 if(!found)
                 {
-                    OUTSTREAM << "No webdav links found" << endl;
+                    OUTSTREAM << "No webdav links found" << std::endl;
                 }
 
                 delete webdavnodes;
@@ -6141,7 +6141,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
            }
            else
            {
-               OUTSTREAM << "Webdav server might not running. Add a new location to serve." << endl;
+               OUTSTREAM << "Webdav server might not running. Add a new location to serve." << std::endl;
            }
 
            return;
@@ -6213,7 +6213,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
 
                     if (sizeprior != sizeafter)
                     {
-                        OUTSTREAM << pathToServe << " no longer served via webdav" << endl;
+                        OUTSTREAM << pathToServe << " no longer served via webdav" << std::endl;
                     }
                     else
                     {
@@ -6236,7 +6236,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
                 if (n)
                 {
                     char *l = api->httpServerGetLocalWebDavLink(n);
-                    OUTSTREAM << "Serving via webdav " << pathToServe << ": " << l << endl;
+                    OUTSTREAM << "Serving via webdav " << pathToServe << ": " << l << std::endl;
 
                     mtxWebDavLocations.lock();
                     list<string> servedpaths = ConfigurationManager::getConfigurationValueList<string>("webdav_served_locations");
@@ -6311,17 +6311,17 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
         }
 
 
-        OUTSTREAM << "List of excluded names:" << endl;
+        OUTSTREAM << "List of excluded names:" << std::endl;
 
         for (set<string>::iterator it=ConfigurationManager::excludedNames.begin(); it!=ConfigurationManager::excludedNames.end(); ++it)
         {
-            OUTSTREAM << *it << endl;
+            OUTSTREAM << *it << std::endl;
         }
 
         if ( !getFlag(clflags, "restart-syncs") && (getFlag(clflags, "a") || getFlag(clflags, "d")) )
         {
-            OUTSTREAM << endl <<  "Changes will not be applied inmediately to operations being performed in active syncs."
-                      << " See \"exclude --help\" for further info" << endl;
+            OUTSTREAM << std::endl <<  "Changes will not be applied inmediately to operations being performed in active syncs."
+                      << " See \"exclude --help\" for further info" << std::endl;
         }
     }
     else if (words[0] == "sync")
@@ -6344,7 +6344,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
         {
             // get screen size for output purposes
             unsigned int width = getNumberOfCols(75);
-            PATHSIZE = min(60,int((width-46)/2));
+            PATHSIZE = std::min(60,int((width-46)/2));
         }
 
         bool headershown = false;
@@ -6895,7 +6895,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
                     megaCmdListener->wait();
                     if (checkNoErrors(megaCmdListener->getError(), "delete contact"))
                     {
-                        OUTSTREAM << "Contact " << words[1] << " removed succesfully" << endl;
+                        OUTSTREAM << "Contact " << words[1] << " removed succesfully" << std::endl;
                     }
                     delete megaCmdListener;
                 }
@@ -6946,7 +6946,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
                         {
                             OUTSTREAM << " since " << getReadableTime(user->getTimestamp());
                         }
-                        OUTSTREAM << endl;
+                        OUTSTREAM << std::endl;
 
                         if (getFlag(clflags, "s"))
                         {
@@ -6963,7 +6963,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
                                         {
                                             if (first_share)
                                             {
-                                                OUTSTREAM << "\tSharing:" << endl;
+                                                OUTSTREAM << "\tSharing:" << std::endl;
                                                 first_share = false;
                                             }
 
@@ -7137,7 +7137,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
                         megaCmdListener->wait();
                         if (checkNoErrors(megaCmdListener->getError(), "set node attribute: " + attribute))
                         {
-                            OUTSTREAM << "Node attribute " << attribute << ( cancel ? " removed" : " updated" ) << " correctly" << endl;
+                            OUTSTREAM << "Node attribute " << attribute << ( cancel ? " removed" : " updated" ) << " correctly" << std::endl;
                             delete n;
                             n = api->getNodeByHandle(megaCmdListener->getRequest()->getNodeHandle());
                         }
@@ -7158,7 +7158,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
                 {
                     if (!attribute.size())
                     {
-                        OUTSTREAM << "The node has " << attrlist->size() << " attributes" << endl;
+                        OUTSTREAM << "The node has " << attrlist->size() << " attributes" << std::endl;
                     }
                     for (int a = 0; a < attrlist->size(); a++)
                     {
@@ -7166,7 +7166,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
                         if (!attribute.size() || ( attribute == iattr ))
                         {
                             const char* iattrval = n->getCustomAttr(iattr.c_str());
-                            OUTSTREAM << "\t" << iattr << " = " << ( iattrval ? iattrval : "NULL" ) << endl;
+                            OUTSTREAM << "\t" << iattr << " = " << ( iattrval ? iattrval : "NULL" ) << std::endl;
                         }
                     }
 
@@ -7221,7 +7221,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
                 megaCmdListener->wait();
                 if (checkNoErrors(megaCmdListener->getError(), string("set user attribute ") + getAttrStr(attribute)))
                 {
-                    OUTSTREAM << "User attribute " << getAttrStr(attribute) << " updated" << " correctly" << endl;
+                    OUTSTREAM << "User attribute " << getAttrStr(attribute) << " updated" << " correctly" << std::endl;
                 }
                 else
                 {
@@ -7268,11 +7268,11 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
                     }
 
                 }
-                catch (exception e)
+                catch (std::exception e)
                 {
                     svalue = "NOT PRINTABLE";
                 }
-                OUTSTREAM << "\t" << getAttrStr(iattr) << " = " << svalue << endl;
+                OUTSTREAM << "\t" << getAttrStr(iattr) << " = " << svalue << std::endl;
             }
 
             delete megaCmdListener;
@@ -7308,7 +7308,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
                 megaCmdListener->wait();
                 if (checkNoErrors(megaCmdListener->getError(), ( setting ? "set thumbnail " : "get thumbnail " ) + nodepath + " to " + path))
                 {
-                    OUTSTREAM << "Thumbnail for " << nodepath << ( setting ? " loaded from " : " saved in " ) << megaCmdListener->getRequest()->getFile() << endl;
+                    OUTSTREAM << "Thumbnail for " << nodepath << ( setting ? " loaded from " : " saved in " ) << megaCmdListener->getRequest()->getFile() << std::endl;
                 }
                 delete megaCmdListener;
                 delete n;
@@ -7350,7 +7350,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
                 megaCmdListener->wait();
                 if (checkNoErrors(megaCmdListener->getError(), ( setting ? "set preview " : "get preview " ) + nodepath + " to " + path))
                 {
-                    OUTSTREAM << "Preview for " << nodepath << ( setting ? " loaded from " : " saved in " ) << megaCmdListener->getRequest()->getFile() << endl;
+                    OUTSTREAM << "Preview for " << nodepath << ( setting ? " loaded from " : " saved in " ) << megaCmdListener->getRequest()->getFile() << std::endl;
                 }
                 delete megaCmdListener;
                 delete n;
@@ -7447,18 +7447,18 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
         {
             long long us = api->getMaxUploadSpeed();
             long long ds = api->getMaxDownloadSpeed();
-            OUTSTREAM << "Upload speed limit = " << (us?sizeToText(us,false,hr):"unlimited") << ((us && hr)?"/s":(us?" B/s":""))  << endl;
-            OUTSTREAM << "Download speed limit = " << (ds?sizeToText(ds,false,hr):"unlimited") << ((ds && hr)?"/s":(us?" B/s":"")) << endl;
+            OUTSTREAM << "Upload speed limit = " << (us?sizeToText(us,false,hr):"unlimited") << ((us && hr)?"/s":(us?" B/s":""))  << std::endl;
+            OUTSTREAM << "Download speed limit = " << (ds?sizeToText(ds,false,hr):"unlimited") << ((ds && hr)?"/s":(us?" B/s":"")) << std::endl;
         }
         else if (getFlag(clflags, "u"))
         {
             long long us = api->getMaxUploadSpeed();
-            OUTSTREAM << "Upload speed limit = " << (us?sizeToText(us,false,hr):"unlimited") << ((us && hr)?"/s":(us?" B/s":"")) << endl;
+            OUTSTREAM << "Upload speed limit = " << (us?sizeToText(us,false,hr):"unlimited") << ((us && hr)?"/s":(us?" B/s":"")) << std::endl;
         }
         else if (getFlag(clflags, "d"))
         {
             long long ds = api->getMaxDownloadSpeed();
-            OUTSTREAM << "Download speed limit = " << (ds?sizeToText(ds,false,hr):"unlimited") << ((ds && hr)?"/s":(ds?" B/s":"")) << endl;
+            OUTSTREAM << "Download speed limit = " << (ds?sizeToText(ds,false,hr):"unlimited") << ((ds && hr)?"/s":(ds?" B/s":"")) << std::endl;
         }
 
         return;
@@ -7498,7 +7498,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
                 megaCmdListener->wait();
                 if (checkNoErrors(megaCmdListener->getError(), action==MegaContactRequest::INVITE_ACTION_DELETE?"remove invitation":"(re)invite user"))
                 {
-                    OUTSTREAM << "Invitation to user: " << email << " " << (action==MegaContactRequest::INVITE_ACTION_DELETE?"removed":"sent") << endl;
+                    OUTSTREAM << "Invitation to user: " << email << " " << (action==MegaContactRequest::INVITE_ACTION_DELETE?"removed":"sent") << std::endl;
                 }
                 else if (megaCmdListener->getError()->getErrorCode() == MegaError::API_EACCESS)
                 {
@@ -7570,7 +7570,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
         MegaUser *u = api->getMyUser();
         if (u)
         {
-            OUTSTREAM << "Account e-mail: " << u->getEmail() << endl;
+            OUTSTREAM << "Account e-mail: " << u->getEmail() << std::endl;
             if (getFlag(clflags, "l"))
             {
                 MegaCmdListener *megaCmdListener = new MegaCmdListener(NULL);
@@ -7646,7 +7646,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
                             {
                                 if (dumpListOfExported(n, words[i]) == 0 )
                                 {
-                                    OUTSTREAM << words[i] << " is not exported. Use -a to export it" << endl;
+                                    OUTSTREAM << words[i] << " is not exported. Use -a to export it" << std::endl;
                                 }
                             }
                             delete n;
@@ -7692,7 +7692,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
                                 OUTSTREAM << words[i];
                                 OUTSTREAM << ">";
                             }
-                            OUTSTREAM << ". Use -a to export " << (words[i].size()?"it":"something") << endl;
+                            OUTSTREAM << ". Use -a to export " << (words[i].size()?"it":"something") << std::endl;
                         }
                     }
                     delete n;
@@ -7782,7 +7782,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
                                             char *pathnewFolder = api->getNodePath(importedFolderNode);
                                             if (pathnewFolder)
                                             {
-                                                OUTSTREAM << "Imported folder complete: " << pathnewFolder << endl;
+                                                OUTSTREAM << "Imported folder complete: " << pathnewFolder << std::endl;
                                                 delete []pathnewFolder;
                                             }
                                             delete importedFolderNode;
@@ -7840,7 +7840,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
     {
         int clientID = getintOption(cloptions, "clientID", -1);
 
-        OUTSTREAM << "Reloading account..." << endl;
+        OUTSTREAM << "Reloading account..." << std::endl;
         MegaCmdListener *megaCmdListener = new MegaCmdListener(NULL, NULL, clientID);
         api->fetchNodes(megaCmdListener);
         actUponFetchNodes(api, megaCmdListener);
@@ -7849,7 +7849,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
     }
     else if (words[0] == "logout")
     {
-        OUTSTREAM << "Logging out..." << endl;
+        OUTSTREAM << "Logging out..." << std::endl;
         MegaCmdListener *megaCmdListener = new MegaCmdListener(NULL);
         bool keepSession = getFlag(clflags, "keep-session");
         char * dumpSession = NULL;
@@ -7866,11 +7866,11 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
         actUponLogout(megaCmdListener, keepSession);
         if (keepSession)
         {
-            OUTSTREAM << "Session closed but not deleted. Warning: it will be restored the next time you execute the application. Execute \"logout\" to delete the session permanently." << endl;
+            OUTSTREAM << "Session closed but not deleted. Warning: it will be restored the next time you execute the application. Execute \"logout\" to delete the session permanently." << std::endl;
 
             if (dumpSession)
             {
-                OUTSTREAM << "You can also login with the session id: " << dumpSession << endl;
+                OUTSTREAM << "You can also login with the session id: " << dumpSession << std::endl;
                 delete []dumpSession;
             }
         }
@@ -7936,7 +7936,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
         char * dumpSession = api->dumpSession();
         if (dumpSession)
         {
-            OUTSTREAM << "Your (secret) session is: " << dumpSession << endl;
+            OUTSTREAM << "Your (secret) session is: " << dumpSession << std::endl;
             delete []dumpSession;
         }
         else
@@ -7952,7 +7952,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
     }
     else if (words[0] == "version")
     {
-        OUTSTREAM << "MEGA CMD version: " << MEGACMD_MAJOR_VERSION << "." << MEGACMD_MINOR_VERSION << "." << MEGACMD_MICRO_VERSION << ": code " << MEGACMD_CODE_VERSION << endl;
+        OUTSTREAM << "MEGA CMD version: " << MEGACMD_MAJOR_VERSION << "." << MEGACMD_MINOR_VERSION << "." << MEGACMD_MICRO_VERSION << ": code " << MEGACMD_CODE_VERSION << std::endl;
 
         MegaCmdListener *megaCmdListener = new MegaCmdListener(NULL);
         api->getLastAvailableVersion("BdARkQSQ",megaCmdListener);
@@ -7970,13 +7970,13 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
             {
                 if (megaCmdListener->getRequest()->getNumber() != MEGACMD_CODE_VERSION)
                 {
-                    OUTSTREAM << "---------------------------------------------------------------------" << endl;
-                    OUTSTREAM << "--        There is a new version available of megacmd: " << setw(12) << left << megaCmdListener->getRequest()->getName() << "--" << endl;
-                    OUTSTREAM << "--        Please, download it from https://mega.nz/cmd             --" << endl;
+                    OUTSTREAM << "---------------------------------------------------------------------" << std::endl;
+                    OUTSTREAM << "--        There is a new version available of megacmd: " << std::setw(12) << std::left << megaCmdListener->getRequest()->getName() << "--" << std::endl;
+                    OUTSTREAM << "--        Please, download it from https://mega.nz/cmd             --" << std::endl;
 #if defined(__APPLE__)
-                    OUTSTREAM << "--        Before installing enter \"exit\" to close MEGAcmd          --" << endl;
+                    OUTSTREAM << "--        Before installing enter \"exit\" to close MEGAcmd          --" << std::endl;
 #endif
-                    OUTSTREAM << "---------------------------------------------------------------------" << endl;
+                    OUTSTREAM << "---------------------------------------------------------------------" << std::endl;
                 }
             }
             delete megaCmdListener;
@@ -7995,62 +7995,62 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
 
         if (getFlag(clflags,"c"))
         {
-            OUTSTREAM << "Changes in the current version:" << endl;
+            OUTSTREAM << "Changes in the current version:" << std::endl;
             string thechangelog = megacmdchangelog;
             if (thechangelog.size())
             {
                 replaceAll(thechangelog,"\n","\n * ");
-                OUTSTREAM << " * " << thechangelog << endl << endl;
+                OUTSTREAM << " * " << thechangelog << std::endl << std::endl;
             }
         }
         if (getFlag(clflags,"l"))
         {
-            OUTSTREAM << "MEGA SDK version: " << MEGA_MAJOR_VERSION << "." << MEGA_MINOR_VERSION << "." << MEGA_MICRO_VERSION << endl;
+            OUTSTREAM << "MEGA SDK version: " << MEGA_MAJOR_VERSION << "." << MEGA_MINOR_VERSION << "." << MEGA_MICRO_VERSION << std::endl;
 
-            OUTSTREAM << "MEGA SDK Credits: https://github.com/meganz/sdk/blob/master/CREDITS.md" << endl;
-            OUTSTREAM << "MEGA SDK License: https://github.com/meganz/sdk/blob/master/LICENSE" << endl;
-            OUTSTREAM << "MEGAcmd License: https://github.com/meganz/megacmd/blob/master/LICENSE" << endl;
+            OUTSTREAM << "MEGA SDK Credits: https://github.com/meganz/sdk/blob/master/CREDITS.md" << std::endl;
+            OUTSTREAM << "MEGA SDK License: https://github.com/meganz/sdk/blob/master/LICENSE" << std::endl;
+            OUTSTREAM << "MEGAcmd License: https://github.com/meganz/megacmd/blob/master/LICENSE" << std::endl;
 
-            OUTSTREAM << "Features enabled:" << endl;
+            OUTSTREAM << "Features enabled:" << std::endl;
 
 #ifdef USE_CRYPTOPP
-            OUTSTREAM << "* CryptoPP" << endl;
+            OUTSTREAM << "* CryptoPP" << std::endl;
 #endif
 
 #ifdef USE_SQLITE
-          OUTSTREAM << "* SQLite" << endl;
+          OUTSTREAM << "* SQLite" << std::endl;
 #endif
 
 #ifdef USE_BDB
-            OUTSTREAM << "* Berkeley DB" << endl;
+            OUTSTREAM << "* Berkeley DB" << std::endl;
 #endif
 
 #ifdef USE_INOTIFY
-           OUTSTREAM << "* inotify" << endl;
+           OUTSTREAM << "* inotify" << std::endl;
 #endif
 
 #ifdef HAVE_FDOPENDIR
-           OUTSTREAM << "* fdopendir" << endl;
+           OUTSTREAM << "* fdopendir" << std::endl;
 #endif
 
 #ifdef HAVE_SENDFILE
-            OUTSTREAM << "* sendfile" << endl;
+            OUTSTREAM << "* sendfile" << std::endl;
 #endif
 
 #ifdef _LARGE_FILES
-           OUTSTREAM << "* _LARGE_FILES" << endl;
+           OUTSTREAM << "* _LARGE_FILES" << std::endl;
 #endif
 
 #ifdef USE_FREEIMAGE
-            OUTSTREAM << "* FreeImage" << endl;
+            OUTSTREAM << "* FreeImage" << std::endl;
 #endif
 
 #ifdef USE_PCRE
-            OUTSTREAM << "* PCRE" << endl;
+            OUTSTREAM << "* PCRE" << std::endl;
 #endif
 
 #ifdef ENABLE_SYNC
-           OUTSTREAM << "* sync subsystem" << endl;
+           OUTSTREAM << "* sync subsystem" << std::endl;
 #endif
         }
         return;
@@ -8063,7 +8063,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
             LOG_err << "Not logged in.";
             return;
         }
-        OUTSTREAM << api->exportMasterKey() << endl;
+        OUTSTREAM << api->exportMasterKey() << std::endl;
         api->masterKeyExported(); //we do not wait for this to end
     }
     else if (words[0] == "showpcr")
@@ -8090,12 +8090,12 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
             {
                 if (ocrl->size())
                 {
-                    OUTSTREAM << "Outgoing PCRs:" << endl;
+                    OUTSTREAM << "Outgoing PCRs:" << std::endl;
                 }
                 for (int i = 0; i < ocrl->size(); i++)
                 {
                     MegaContactRequest * cr = ocrl->get(i);
-                    OUTSTREAM << " " << setw(22) << cr->getTargetEmail();
+                    OUTSTREAM << " " << std::setw(22) << cr->getTargetEmail();
 
                     char * sid = api->userHandleToBase64(cr->getHandle());
 
@@ -8103,7 +8103,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
                               << ", modification: " << getReadableTime(cr->getModificationTime()) << ")";
 
                     delete[] sid;
-                    OUTSTREAM << endl;
+                    OUTSTREAM << std::endl;
                 }
 
                 delete ocrl;
@@ -8117,13 +8117,13 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
             {
                 if (icrl->size())
                 {
-                    OUTSTREAM << "Incoming PCRs:" << endl;
+                    OUTSTREAM << "Incoming PCRs:" << std::endl;
                 }
 
                 for (int i = 0; i < icrl->size(); i++)
                 {
                     MegaContactRequest * cr = icrl->get(i);
-                    OUTSTREAM << " " << setw(22) << cr->getSourceEmail();
+                    OUTSTREAM << " " << std::setw(22) << cr->getSourceEmail();
 
                     MegaHandle id = cr->getHandle();
                     char sid[12];
@@ -8133,10 +8133,10 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
                               << ", modification: " << getReadableTime(cr->getModificationTime()) << ")";
                     if (cr->getSourceMessage())
                     {
-                        OUTSTREAM << endl << "\t" << "Invitation message: " << cr->getSourceMessage();
+                        OUTSTREAM << std::endl << "\t" << "Invitation message: " << cr->getSourceMessage();
                     }
 
-                    OUTSTREAM << endl;
+                    OUTSTREAM << std::endl;
                 }
 
                 delete icrl;
@@ -8173,11 +8173,11 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
         {
             if (!getFlag(clflags, "a"))
             {
-               OUTSTREAM << "Session " << thesession << " killed successfully" << endl;
+               OUTSTREAM << "Session " << thesession << " killed successfully" << std::endl;
             }
             else
             {
-                OUTSTREAM << "All sessions killed successfully" << endl;
+                OUTSTREAM << "All sessions killed successfully" << std::endl;
             }
         }
 
@@ -8197,7 +8197,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
         {
             // get screen size for output purposes
             unsigned int width = getNumberOfCols(75);
-            PATHSIZE = min(60,int((width-46)/2));
+            PATHSIZE = std::min(60,int((width-46)/2));
         }
 
         if (getFlag(clflags,"c"))
@@ -8211,7 +8211,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
                     megaCmdListener->wait();
                     if (checkNoErrors(megaCmdListener->getError(), "cancel all download transfers"))
                     {
-                        OUTSTREAM << "Download transfers cancelled successfully." << endl;
+                        OUTSTREAM << "Download transfers cancelled successfully." << std::endl;
                     }
                     delete megaCmdListener;
                 }
@@ -8222,7 +8222,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
                     megaCmdListener->wait();
                     if (checkNoErrors(megaCmdListener->getError(), "cancel all upload transfers"))
                     {
-                        OUTSTREAM << "Upload transfers cancelled successfully." << endl;
+                        OUTSTREAM << "Upload transfers cancelled successfully." << std::endl;
                     }
                     delete megaCmdListener;
                 }
@@ -8253,7 +8253,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
                             megaCmdListener->wait();
                             if (checkNoErrors(megaCmdListener->getError(), "cancel transfer with tag " + words[i] + "."))
                             {
-                                OUTSTREAM << "Transfer " << words[i]<< " cancelled successfully." << endl;
+                                OUTSTREAM << "Transfer " << words[i]<< " cancelled successfully." << std::endl;
                             }
                             delete megaCmdListener;
                         }
@@ -8280,7 +8280,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
                     megaCmdListener->wait();
                     if (checkNoErrors(megaCmdListener->getError(), (getFlag(clflags,"p")?"pause all download transfers":"resume all download transfers")))
                     {
-                        OUTSTREAM << "Download transfers "<< (getFlag(clflags,"p")?"pause":"resume") << "d successfully." << endl;
+                        OUTSTREAM << "Download transfers "<< (getFlag(clflags,"p")?"pause":"resume") << "d successfully." << std::endl;
                     }
                     delete megaCmdListener;
                 }
@@ -8291,7 +8291,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
                     megaCmdListener->wait();
                     if (checkNoErrors(megaCmdListener->getError(), (getFlag(clflags,"p")?"pause all download transfers":"resume all download transfers")))
                     {
-                        OUTSTREAM << "Upload transfers "<< (getFlag(clflags,"p")?"pause":"resume") << "d successfully." << endl;
+                        OUTSTREAM << "Upload transfers "<< (getFlag(clflags,"p")?"pause":"resume") << "d successfully." << std::endl;
                     }
                     delete megaCmdListener;
                 }
@@ -8322,7 +8322,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
                             megaCmdListener->wait();
                             if (checkNoErrors(megaCmdListener->getError(), (getFlag(clflags,"p")?"pause transfer with tag ":"resume transfer with tag ") + words[i] + "."))
                             {
-                                OUTSTREAM << "Transfer " << words[i]<< " "<< (getFlag(clflags,"p")?"pause":"resume") << "d successfully." << endl;
+                                OUTSTREAM << "Transfer " << words[i]<< " "<< (getFlag(clflags,"p")?"pause":"resume") << "d successfully." << std::endl;
                             }
                             delete megaCmdListener;
                         }
@@ -8340,7 +8340,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
 
         //show transfers
         MegaTransferData* transferdata = api->getTransferData();
-        int limit = getintOption(cloptions, "limit", min(10,transferdata->getNumDownloads()+transferdata->getNumUploads()+(int)globalTransferListener->completedTransfers.size()));
+        int limit = getintOption(cloptions, "limit", std::min(10,transferdata->getNumDownloads()+transferdata->getNumUploads()+(int)globalTransferListener->completedTransfers.size()));
 
         if (!transferdata)
         {
@@ -8481,13 +8481,13 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
                 if (uploadpaused || downloadpaused)
                 {
                     OUTSTREAM << "            " << (downloadpaused?"DOWNLOADS":"") << ((uploadpaused && downloadpaused)?" AND ":"")
-                              << (uploadpaused?"UPLOADS":"") << " ARE PAUSED " << endl;
+                              << (uploadpaused?"UPLOADS":"") << " ARE PAUSED " << std::endl;
                 }
                 printTransfersHeader(PATHSIZE);
             }
             if (i==(unsigned int)limit) //we are in the extra one (not to be shown)
             {
-                OUTSTREAM << " ...  Showing first " << limit << " transfers ..." << endl;
+                OUTSTREAM << " ...  Showing first " << limit << " transfers ..." << std::endl;
                 if (deleteTransfer)
                 {
                     delete transfer;
@@ -8505,7 +8505,7 @@ void MegaCmdExecuter::executecommand(vector<string> words, map<string, int> *clf
     }
     else if (words[0] == "locallogout")
     {
-        OUTSTREAM << "Logging out locally..." << endl;
+        OUTSTREAM << "Logging out locally..." << std::endl;
         cwd = UNDEF;
         return;
     }

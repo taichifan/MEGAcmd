@@ -39,7 +39,7 @@ void localwtostring(const std::wstring* wide, std::string *multibyte);
 #define OUTSTREAMTYPE std::ostream
 #define OUTSTRINGSTREAM std::ostringstream
 #define OUTSTRING std::string
-#define COUT cout
+#define COUT std::cout
 #endif
 
 #include "megaapi_impl.h"

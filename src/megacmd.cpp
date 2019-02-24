@@ -311,11 +311,11 @@ void setprompt(prompttype p, string arg)
     {
         if (arg.size())
         {
-            OUTSTREAM << arg << flush;
+            OUTSTREAM << arg << std::flush;
         }
         else
         {
-            OUTSTREAM << prompts[p] << flush;
+            OUTSTREAM << prompts[p] << std::flush;
         }
 
         console->setecho(false);
@@ -1587,683 +1587,683 @@ string getHelpStr(const char *command)
 {
     ostringstream os;
 
-    os << "Usage: " << getUsageStr(command) << endl;
+    os << "Usage: " << getUsageStr(command) << std::endl;
     if (!strcmp(command, "login"))
     {
-        os << "Logs into a MEGA account" << endl;
-        os << " You can log in either with email and password, with session ID," << endl;
-        os << " or into a folder (an exported/public folder)" << endl;
-        os << " If logging into a folder indicate url#key" << endl;
+        os << "Logs into a MEGA account" << std::endl;
+        os << " You can log in either with email and password, with session ID," << std::endl;
+        os << " or into a folder (an exported/public folder)" << std::endl;
+        os << " If logging into a folder indicate url#key" << std::endl;
     }
     else if (!strcmp(command, "signup"))
     {
-        os << "Register as user with a given email" << endl;
-        os << endl;
-        os << "Options:" << endl;
-        os << " --name=\"Your Name\"" << "\t" << "Name to register. e.g. \"John Smith\"" << endl;
-        os << endl;
-        os << " You will receive an email to confirm your account. " << endl;
-        os << " Once you have received the email, please proceed to confirm the link " << endl;
-        os << " included in that email with \"confirm\"." << endl;
+        os << "Register as user with a given email" << std::endl;
+        os << std::endl;
+        os << "Options:" << std::endl;
+        os << " --name=\"Your Name\"" << "\t" << "Name to register. e.g. \"John Smith\"" << std::endl;
+        os << std::endl;
+        os << " You will receive an email to confirm your account. " << std::endl;
+        os << " Once you have received the email, please proceed to confirm the link " << std::endl;
+        os << " included in that email with \"confirm\"." << std::endl;
     }
     else if (!strcmp(command, "clear"))
     {
-        os << "Clear screen" << endl;
+        os << "Clear screen" << std::endl;
     }
     else if (!strcmp(command, "help"))
     {
-        os << "Prints list of commands" << endl;
-        os << endl;
-        os << "Options:" << endl;
-        os << " -f" << "\t" << "Include a brief description of the commands" << endl;
+        os << "Prints list of commands" << std::endl;
+        os << std::endl;
+        os << "Options:" << std::endl;
+        os << " -f" << "\t" << "Include a brief description of the commands" << std::endl;
     }
     else if (!strcmp(command, "history"))
     {
-        os << "Prints history of used commands" << endl;
-        os << "  Only commands used in interactive mode are registered" << endl;
+        os << "Prints history of used commands" << std::endl;
+        os << "  Only commands used in interactive mode are registered" << std::endl;
     }
     else if (!strcmp(command, "confirm"))
     {
-        os << "Confirm an account using the link provided after the \"signup\" process." << endl;
-        os << " It requires the email and the password used to obtain the link." << endl;
-        os << endl;
+        os << "Confirm an account using the link provided after the \"signup\" process." << std::endl;
+        os << " It requires the email and the password used to obtain the link." << std::endl;
+        os << std::endl;
     }
     else if (!strcmp(command, "session"))
     {
-        os << "Prints (secret) session ID" << endl;
+        os << "Prints (secret) session ID" << std::endl;
     }
     else if (!strcmp(command, "mount"))
     {
-        os << "Lists all the main nodes" << endl;
+        os << "Lists all the main nodes" << std::endl;
     }
     else if (!strcmp(command, "unicode"))
     {
-        os << "Toggle unicode input enabled/disabled in interactive shell" << endl;
-        os << endl;
-        os << " Unicode mode is experimental, you might experience" << endl;
-        os << " some issues interacting with the console" << endl;
-        os << " (e.g. history navigation fails)." << endl;
-        os << "Type \"help --unicode\" for further info" << endl;
+        os << "Toggle unicode input enabled/disabled in interactive shell" << std::endl;
+        os << std::endl;
+        os << " Unicode mode is experimental, you might experience" << std::endl;
+        os << " some issues interacting with the console" << std::endl;
+        os << " (e.g. history navigation fails)." << std::endl;
+        os << "Type \"help --unicode\" for further info" << std::endl;
 
     }
     else if (!strcmp(command, "ls"))
     {
-        os << "Lists files in a remote path" << endl;
-        os << " remotepath can be a pattern (" << getsupportedregexps() << ") " << endl;
-        os << " Also, constructions like /PATTERN1/PATTERN2/PATTERN3 are allowed" << endl;
-        os << endl;
-        os << "Options:" << endl;
-        os << " -R|-r" << "\t" << "list folders recursively" << endl;
-        os << " -l" << "\t" << "print summary" << endl;
-        os << "   " << "\t" << " SUMMARY contents:" << endl;
-        os << "   " << "\t" << "   FLAGS: Indicate type/status of an element:" << endl;
-        os << "   " << "\t" << "     xxxx" << endl;
-        os << "   " << "\t" << "     |||+---- Sharing status: (s)hared, (i)n share or not shared(-)" << endl;
-        os << "   " << "\t" << "     ||+----- if exported, whether it is (p)ermanent or (t)temporal" << endl;
-        os << "   " << "\t" << "     |+------ e/- wheter node is (e)xported" << endl;
-        os << "   " << "\t" << "     +-------- Type(d=folder,-=file,r=root,i=inbox,b=rubbish,x=unsupported)" << endl;
-        os << "   " << "\t" << "   VERS: Number of versions in a file" << endl;
-        os << "   " << "\t" << "   SIZE: Size of the file in bytes:" << endl;
-        os << "   " << "\t" << "   DATE: Modification date for files and creation date for folders:" << endl;
-        os << "   " << "\t" << "   NAME: name of the node" << endl;
-        os << " -h" << "\t" << "Show human readable sizes in summary" << endl;
-        os << " -a" << "\t" << "include extra information" << endl;
-        os << " --versions" << "\t" << "show historical versions" << endl;
-        os << "   " << "\t" << "You can delete all versions of a file with \"deleteversions\"" << endl;
+        os << "Lists files in a remote path" << std::endl;
+        os << " remotepath can be a pattern (" << getsupportedregexps() << ") " << std::endl;
+        os << " Also, constructions like /PATTERN1/PATTERN2/PATTERN3 are allowed" << std::endl;
+        os << std::endl;
+        os << "Options:" << std::endl;
+        os << " -R|-r" << "\t" << "list folders recursively" << std::endl;
+        os << " -l" << "\t" << "print summary" << std::endl;
+        os << "   " << "\t" << " SUMMARY contents:" << std::endl;
+        os << "   " << "\t" << "   FLAGS: Indicate type/status of an element:" << std::endl;
+        os << "   " << "\t" << "     xxxx" << std::endl;
+        os << "   " << "\t" << "     |||+---- Sharing status: (s)hared, (i)n share or not shared(-)" << std::endl;
+        os << "   " << "\t" << "     ||+----- if exported, whether it is (p)ermanent or (t)temporal" << std::endl;
+        os << "   " << "\t" << "     |+------ e/- wheter node is (e)xported" << std::endl;
+        os << "   " << "\t" << "     +-------- Type(d=folder,-=file,r=root,i=inbox,b=rubbish,x=unsupported)" << std::endl;
+        os << "   " << "\t" << "   VERS: Number of versions in a file" << std::endl;
+        os << "   " << "\t" << "   SIZE: Size of the file in bytes:" << std::endl;
+        os << "   " << "\t" << "   DATE: Modification date for files and creation date for folders:" << std::endl;
+        os << "   " << "\t" << "   NAME: name of the node" << std::endl;
+        os << " -h" << "\t" << "Show human readable sizes in summary" << std::endl;
+        os << " -a" << "\t" << "include extra information" << std::endl;
+        os << " --versions" << "\t" << "show historical versions" << std::endl;
+        os << "   " << "\t" << "You can delete all versions of a file with \"deleteversions\"" << std::endl;
 #ifdef USE_PCRE
-        os << " --use-pcre" << "\t" << "use PCRE expressions" << endl;
+        os << " --use-pcre" << "\t" << "use PCRE expressions" << std::endl;
 #endif
     }
     else if (!strcmp(command, "cd"))
     {
-        os << "Changes the current remote folder" << endl;
-        os << endl;
-        os << "If no folder is provided, it will be changed to the root folder" << endl;
+        os << "Changes the current remote folder" << std::endl;
+        os << std::endl;
+        os << "If no folder is provided, it will be changed to the root folder" << std::endl;
     }
     else if (!strcmp(command, "log"))
     {
-        os << "Prints/Modifies the current logs level" << endl;
-        os << endl;
-        os << "Options:" << endl;
-        os << " -c" << "\t" << "CMD log level (higher level messages). " << endl;
-        os << "   " << "\t" << " Messages captured by MEGAcmd server." << endl;
-        os << " -s" << "\t" << "SDK log level (lower level messages)." << endl;
-        os << "   " << "\t" << " Messages captured by the engine and libs" << endl;
+        os << "Prints/Modifies the current logs level" << std::endl;
+        os << std::endl;
+        os << "Options:" << std::endl;
+        os << " -c" << "\t" << "CMD log level (higher level messages). " << std::endl;
+        os << "   " << "\t" << " Messages captured by MEGAcmd server." << std::endl;
+        os << " -s" << "\t" << "SDK log level (lower level messages)." << std::endl;
+        os << "   " << "\t" << " Messages captured by the engine and libs" << std::endl;
 
-        os << endl;
-        os << "Regardless of the log level of the" << endl;
-        os << " interactive shell, you can increase the amount of information given" <<  endl;
-        os << "   by any command by passing \"-v\" (\"-vv\", \"-vvv\", ...)" << endl;
+        os << std::endl;
+        os << "Regardless of the log level of the" << std::endl;
+        os << " interactive shell, you can increase the amount of information given" <<  std::endl;
+        os << "   by any command by passing \"-v\" (\"-vv\", \"-vvv\", ...)" << std::endl;
 
 
     }
     else if (!strcmp(command, "du"))
     {
-        os << "Prints size used by files/folders" << endl;
-        os << " remotepath can be a pattern (" << getsupportedregexps() << ") " << endl;
-        os << endl;
-        os << "Options:" << endl;
-        os << " -h" << "\t" << "Human readable" << endl;
-        os << " --versions" << "\t" << "Calculate size including all versions." << endl;
-        os << "   " << "\t" << "You can remove all versions with \"deleteversions\" and list them with \"ls --versions\"" << endl;
+        os << "Prints size used by files/folders" << std::endl;
+        os << " remotepath can be a pattern (" << getsupportedregexps() << ") " << std::endl;
+        os << std::endl;
+        os << "Options:" << std::endl;
+        os << " -h" << "\t" << "Human readable" << std::endl;
+        os << " --versions" << "\t" << "Calculate size including all versions." << std::endl;
+        os << "   " << "\t" << "You can remove all versions with \"deleteversions\" and list them with \"ls --versions\"" << std::endl;
 #ifdef USE_PCRE
-        os << " --use-pcre" << "\t" << "use PCRE expressions" << endl;
+        os << " --use-pcre" << "\t" << "use PCRE expressions" << std::endl;
 #endif
     }
     else if (!strcmp(command, "pwd"))
     {
-        os << "Prints the current remote folder" << endl;
+        os << "Prints the current remote folder" << std::endl;
     }
     else if (!strcmp(command, "lcd"))
     {
-        os << "Changes the current local folder for the interactive console" << endl;
-        os << endl;
-        os << "It will be used for uploads and downloads" << endl;
-        os << endl;
-        os << "If not using interactive console, the current local folder will be " << endl;
-        os << " that of the shell executing mega comands" << endl;
+        os << "Changes the current local folder for the interactive console" << std::endl;
+        os << std::endl;
+        os << "It will be used for uploads and downloads" << std::endl;
+        os << std::endl;
+        os << "If not using interactive console, the current local folder will be " << std::endl;
+        os << " that of the shell executing mega comands" << std::endl;
     }
     else if (!strcmp(command, "lpwd"))
     {
-        os << "Prints the current local folder for the interactive console" << endl;
-        os << endl;
-        os << "It will be used for uploads and downloads" << endl;
-        os << endl;
-        os << "If not using interactive console, the current local folder will be " << endl;
-        os << " that of the shell executing mega comands" << endl;
+        os << "Prints the current local folder for the interactive console" << std::endl;
+        os << std::endl;
+        os << "It will be used for uploads and downloads" << std::endl;
+        os << std::endl;
+        os << "If not using interactive console, the current local folder will be " << std::endl;
+        os << " that of the shell executing mega comands" << std::endl;
     }
     else if (!strcmp(command, "logout"))
     {
-        os << "Logs out" << endl;
-        os << endl;
-        os << "Options:" << endl;
-        os << " --keep-session" << "\t" << "Keeps the current session." << endl;
+        os << "Logs out" << std::endl;
+        os << std::endl;
+        os << "Options:" << std::endl;
+        os << " --keep-session" << "\t" << "Keeps the current session." << std::endl;
     }
     else if (!strcmp(command, "import"))
     {
-        os << "Imports the contents of a remote link into user's cloud" << endl;
-        os << endl;
-        os << "If no remote path is provided, the current local folder will be used" << endl;
+        os << "Imports the contents of a remote link into user's cloud" << std::endl;
+        os << std::endl;
+        os << "If no remote path is provided, the current local folder will be used" << std::endl;
     }
     else if (!strcmp(command, "put"))
     {
-        os << "Uploads files/folders to a remote folder" << endl;
-        os << endl;
-        os << "Options:" << endl;
-        os << " -c" << "\t" << "Creates remote folder destination in case of not existing." << endl;
-        os << " -q" << "\t" << "queue upload: execute in the background. Don't wait for it to end' " << endl;
-        os << " --ignore-quota-warn" << "\t" << "ignore quota surpassing warning. " << endl;
-        os << "                    " << "\t" << "  The upload will be attempted anyway." << endl;
+        os << "Uploads files/folders to a remote folder" << std::endl;
+        os << std::endl;
+        os << "Options:" << std::endl;
+        os << " -c" << "\t" << "Creates remote folder destination in case of not existing." << std::endl;
+        os << " -q" << "\t" << "queue upload: execute in the background. Don't wait for it to end' " << std::endl;
+        os << " --ignore-quota-warn" << "\t" << "ignore quota surpassing warning. " << std::endl;
+        os << "                    " << "\t" << "  The upload will be attempted anyway." << std::endl;
 
-        os << endl;
-        os << "Notice that the dstremotepath can only be omitted when only one local path is provided. " << endl;
-        os << " In such case, the current remote working dir will be the destination for the upload." << endl;
-        os << " Mind that using wildcards for local paths will result in multiple paths." << endl;
+        os << std::endl;
+        os << "Notice that the dstremotepath can only be omitted when only one local path is provided. " << std::endl;
+        os << " In such case, the current remote working dir will be the destination for the upload." << std::endl;
+        os << " Mind that using wildcards for local paths will result in multiple paths." << std::endl;
     }
     else if (!strcmp(command, "get"))
     {
-        os << "Downloads a remote file/folder or a public link " << endl;
-        os << endl;
-        os << "In case it is a file, the file will be downloaded at the specified folder " << endl;
-        os << "                             (or at the current folder if none specified)." << endl;
-        os << "  If the localpath (destination) already exists and is the same (same contents)" << endl;
-        os << "  nothing will be done. If differs, it will create a new file appending \" (NUM)\" " << endl;
-        os << endl;
-        os << "For folders, the entire contents (and the root folder itself) will be" << endl;
-        os << "                    by default downloaded into the destination folder" << endl;
-        os << "Options:" << endl;
-        os << " -q" << "\t" << "queue download: execute in the background. Don't wait for it to end' " << endl;
-        os << " -m" << "\t" << "if the folder already exists, the contents will be merged with the " << endl;
-        os << "                     downloaded one (preserving the existing files)" << endl;
-        os << " --ignore-quota-warn" << "\t" << "ignore quota surpassing warning. " << endl;
-        os << "                    " << "\t" << "  The download will be attempted anyway." << endl;
+        os << "Downloads a remote file/folder or a public link " << std::endl;
+        os << std::endl;
+        os << "In case it is a file, the file will be downloaded at the specified folder " << std::endl;
+        os << "                             (or at the current folder if none specified)." << std::endl;
+        os << "  If the localpath (destination) already exists and is the same (same contents)" << std::endl;
+        os << "  nothing will be done. If differs, it will create a new file appending \" (NUM)\" " << std::endl;
+        os << std::endl;
+        os << "For folders, the entire contents (and the root folder itself) will be" << std::endl;
+        os << "                    by default downloaded into the destination folder" << std::endl;
+        os << "Options:" << std::endl;
+        os << " -q" << "\t" << "queue download: execute in the background. Don't wait for it to end' " << std::endl;
+        os << " -m" << "\t" << "if the folder already exists, the contents will be merged with the " << std::endl;
+        os << "                     downloaded one (preserving the existing files)" << std::endl;
+        os << " --ignore-quota-warn" << "\t" << "ignore quota surpassing warning. " << std::endl;
+        os << "                    " << "\t" << "  The download will be attempted anyway." << std::endl;
 #ifdef USE_PCRE
-        os << " --use-pcre" << "\t" << "use PCRE expressions" << endl;
+        os << " --use-pcre" << "\t" << "use PCRE expressions" << std::endl;
 #endif
 
     }
     if (!strcmp(command, "attr"))
     {
-        os << "Lists/updates node attributes" << endl;
-        os << endl;
-        os << "Options:" << endl;
-        os << " -s" << "\tattribute value \t" << "sets an attribute to a value" << endl;
-        os << " -d" << "\tattribute       \t" << "removes the attribute" << endl;
+        os << "Lists/updates node attributes" << std::endl;
+        os << std::endl;
+        os << "Options:" << std::endl;
+        os << " -s" << "\tattribute value \t" << "sets an attribute to a value" << std::endl;
+        os << " -d" << "\tattribute       \t" << "removes the attribute" << std::endl;
     }
     if (!strcmp(command, "userattr"))
     {
-        os << "Lists/updates user attributes" << endl;
-        os << endl;
-        os << "Options:" << endl;
-        os << " -s" << "\tattribute value \t" << "sets an attribute to a value" << endl;
-        os << " --user=user@email" << "\t" << "select the user to query" << endl;
+        os << "Lists/updates user attributes" << std::endl;
+        os << std::endl;
+        os << "Options:" << std::endl;
+        os << " -s" << "\tattribute value \t" << "sets an attribute to a value" << std::endl;
+        os << " --user=user@email" << "\t" << "select the user to query" << std::endl;
     }
     else if (!strcmp(command, "mkdir"))
     {
-        os << "Creates a directory or a directories hierarchy" << endl;
-        os << endl;
-        os << "Options:" << endl;
-        os << " -p" << "\t" << "Allow recursive" << endl;
+        os << "Creates a directory or a directories hierarchy" << std::endl;
+        os << std::endl;
+        os << "Options:" << std::endl;
+        os << " -p" << "\t" << "Allow recursive" << std::endl;
     }
     else if (!strcmp(command, "rm"))
     {
-        os << "Deletes a remote file/folder" << endl;
-        os << endl;
-        os << "Options:" << endl;
-        os << " -r" << "\t" << "Delete recursively (for folders)" << endl;
-        os << " -f" << "\t" << "Force (no asking)" << endl;
+        os << "Deletes a remote file/folder" << std::endl;
+        os << std::endl;
+        os << "Options:" << std::endl;
+        os << " -r" << "\t" << "Delete recursively (for folders)" << std::endl;
+        os << " -f" << "\t" << "Force (no asking)" << std::endl;
 #ifdef USE_PCRE
-        os << " --use-pcre" << "\t" << "use PCRE expressions" << endl;
+        os << " --use-pcre" << "\t" << "use PCRE expressions" << std::endl;
 #endif
     }
     else if (!strcmp(command, "mv"))
     {
-        os << "Moves file(s)/folder(s) into a new location (all remotes)" << endl;
-        os << endl;
-        os << "If the location exists and is a folder, the source will be moved there" << endl;
-        os << "If the location doesn't exist, the source will be renamed to the destination name given" << endl;
+        os << "Moves file(s)/folder(s) into a new location (all remotes)" << std::endl;
+        os << std::endl;
+        os << "If the location exists and is a folder, the source will be moved there" << std::endl;
+        os << "If the location doesn't exist, the source will be renamed to the destination name given" << std::endl;
 #ifdef USE_PCRE
-        os << "Options:" << endl;
-        os << " --use-pcre" << "\t" << "use PCRE expressions" << endl;
+        os << "Options:" << std::endl;
+        os << " --use-pcre" << "\t" << "use PCRE expressions" << std::endl;
 #endif
     }
     else if (!strcmp(command, "cp"))
     {
-        os << "Copies a file/folder into a new location (all remotes)" << endl;
-        os << endl;
-        os << "If the location exists and is a folder, the source will be copied there" << endl;
-        os << "If the location doesn't exist, the file/folder will be renamed to the destination name given" << endl;
-        os << endl;
-        os << "If \"dstemail:\" provided, the file/folder will be sent to that user's inbox (//in)" << endl;
-        os << " e.g: cp /path/to/file user@doma.in:" << endl;
-        os << " Remember the trailing \":\", otherwise a file with the name of that user (\"user@doma.in\") will be created" << endl;
+        os << "Copies a file/folder into a new location (all remotes)" << std::endl;
+        os << std::endl;
+        os << "If the location exists and is a folder, the source will be copied there" << std::endl;
+        os << "If the location doesn't exist, the file/folder will be renamed to the destination name given" << std::endl;
+        os << std::endl;
+        os << "If \"dstemail:\" provided, the file/folder will be sent to that user's inbox (//in)" << std::endl;
+        os << " e.g: cp /path/to/file user@doma.in:" << std::endl;
+        os << " Remember the trailing \":\", otherwise a file with the name of that user (\"user@doma.in\") will be created" << std::endl;
     }
 #ifndef _WIN32
     else if (!strcmp(command, "permissions"))
     {
-        os << "Shows/Establish default permissions for files and folders created by MEGAcmd." << endl;
-        os << endl;
-        os << "Permissions are unix-like permissions, with 3 numbers: one for owner, one for group and one for others" << endl;
-        os << "Options:" << endl;
-        os << " --files" << "\t" << "To show/set files default permissions." << endl;
-        os << " --folders" << "\t" << "To show/set folders default permissions." << endl;
-        os << " --s XXX" << "\t" << "To set new permissions for newly created files/folder. " << endl;
-        os << "        " << "\t" << " Notice that for files minimum permissions is 600," << endl;
-        os << "        " << "\t" << " for folders minimum permissions is 700." << endl;
-        os << "        " << "\t" << " Further restrictions to owner are not allowed (to avoid missfunctioning)." << endl;
-        os << "        " << "\t" << " Notice that permissions of already existing files/folders will not change." << endl;
-        os << "        " << "\t" << " Notice that permissions of already existing files/folders will not change." << endl;
-        os << endl;
-        os << "Notice: this permissions will be saved for the next time you execute MEGAcmd server. They will be removed if you logout." << endl;
+        os << "Shows/Establish default permissions for files and folders created by MEGAcmd." << std::endl;
+        os << std::endl;
+        os << "Permissions are unix-like permissions, with 3 numbers: one for owner, one for group and one for others" << std::endl;
+        os << "Options:" << std::endl;
+        os << " --files" << "\t" << "To show/set files default permissions." << std::endl;
+        os << " --folders" << "\t" << "To show/set folders default permissions." << std::endl;
+        os << " --s XXX" << "\t" << "To set new permissions for newly created files/folder. " << std::endl;
+        os << "        " << "\t" << " Notice that for files minimum permissions is 600," << std::endl;
+        os << "        " << "\t" << " for folders minimum permissions is 700." << std::endl;
+        os << "        " << "\t" << " Further restrictions to owner are not allowed (to avoid missfunctioning)." << std::endl;
+        os << "        " << "\t" << " Notice that permissions of already existing files/folders will not change." << std::endl;
+        os << "        " << "\t" << " Notice that permissions of already existing files/folders will not change." << std::endl;
+        os << std::endl;
+        os << "Notice: this permissions will be saved for the next time you execute MEGAcmd server. They will be removed if you logout." << std::endl;
 
     }
 #endif
     else if (!strcmp(command, "https"))
     {
-        os << "Shows if HTTPS is used for transfers. Use \"https on\" to enable it." << endl;
-        os << endl;
-        os << "HTTPS is not necesary since all data is stored and transfered encrypted." << endl;
-        os << "Enabling it will increase CPU usage and add network overhead." << endl;
-        os << endl;
-        os << "Notice that this setting is ephemeral: it will reset for the next time you open MEGAcmd" << endl;
+        os << "Shows if HTTPS is used for transfers. Use \"https on\" to enable it." << std::endl;
+        os << std::endl;
+        os << "HTTPS is not necesary since all data is stored and transfered encrypted." << std::endl;
+        os << "Enabling it will increase CPU usage and add network overhead." << std::endl;
+        os << std::endl;
+        os << "Notice that this setting is ephemeral: it will reset for the next time you open MEGAcmd" << std::endl;
     }
     else if (!strcmp(command, "deleteversions"))
     {
-        os << "Deletes previous versions." << endl;
-        os << endl;
-        os << "This will permanently delete all historical versions of a file. " << endl;
-        os << "The current version of the file will remain." << endl;
-        os << "Note: any file version shared to you from a contact will need to be deleted by them." << endl;
+        os << "Deletes previous versions." << std::endl;
+        os << std::endl;
+        os << "This will permanently delete all historical versions of a file. " << std::endl;
+        os << "The current version of the file will remain." << std::endl;
+        os << "Note: any file version shared to you from a contact will need to be deleted by them." << std::endl;
 
-        os << endl;
-        os << "Options:" << endl;
-        os << " -f   " << "\t" << "Force (no asking)" << endl;
-        os << " --all" << "\t" << "Delete versions of all nodes. This will delete the version histories of all files (not current files)." << endl;
+        os << std::endl;
+        os << "Options:" << std::endl;
+        os << " -f   " << "\t" << "Force (no asking)" << std::endl;
+        os << " --all" << "\t" << "Delete versions of all nodes. This will delete the version histories of all files (not current files)." << std::endl;
 #ifdef USE_PCRE
-        os << " --use-pcre" << "\t" << "use PCRE expressions" << endl;
+        os << " --use-pcre" << "\t" << "use PCRE expressions" << std::endl;
 #endif
-        os << endl;
-        os << "To see versions of a file use \"ls --versions\"." << endl;
-        os << "To see space occupied by file versions use \"du\" with \"--versions\"." << endl;
+        os << std::endl;
+        os << "To see versions of a file use \"ls --versions\"." << std::endl;
+        os << "To see space occupied by file versions use \"du\" with \"--versions\"." << std::endl;
     }
 #ifdef HAVE_LIBUV
     else if (!strcmp(command, "webdav"))
     {
-        os << "Configures a WEBDAV server to serve a location in MEGA" << endl;
-        os << endl;
-        os << "This can also be used for streaming files. The server will be running as long as MEGAcmd Server is. " << endl;
-        os << "If no argument is given, it will list the webdav enabled locations." << endl;
-        os << endl;
-        os << "Options:" << endl;
-        os << " --d        " << "\t" << "Stops serving that location" << endl;
-        os << " --public   " << "\t" << "*Allow access from outside localhost" << endl;
-        os << " --port=PORT" << "\t" << "*Port to serve. DEFAULT= 4443" << endl;
-        os << " --tls      " << "\t" << "*Serve with TLS (HTTPS)" << endl;
-        os << " --certificate=/path/to/certificate.pem" << "\t" << "*Path to PEM formated certificate" << endl;
-        os << " --key=/path/to/certificate.key" << "\t" << "*Path to PEM formated key" << endl;
-        os << endl;
-        os << "*If you serve more than one location, these parameters will be ignored and use those of the first location served." << endl;
-        os << endl;
-        os << "Caveat: This functionality is in BETA state. If you experience any issue with this, please contact: support@mega.nz" << endl;
-        os << endl;
+        os << "Configures a WEBDAV server to serve a location in MEGA" << std::endl;
+        os << std::endl;
+        os << "This can also be used for streaming files. The server will be running as long as MEGAcmd Server is. " << std::endl;
+        os << "If no argument is given, it will list the webdav enabled locations." << std::endl;
+        os << std::endl;
+        os << "Options:" << std::endl;
+        os << " --d        " << "\t" << "Stops serving that location" << std::endl;
+        os << " --public   " << "\t" << "*Allow access from outside localhost" << std::endl;
+        os << " --port=PORT" << "\t" << "*Port to serve. DEFAULT= 4443" << std::endl;
+        os << " --tls      " << "\t" << "*Serve with TLS (HTTPS)" << std::endl;
+        os << " --certificate=/path/to/certificate.pem" << "\t" << "*Path to PEM formated certificate" << std::endl;
+        os << " --key=/path/to/certificate.key" << "\t" << "*Path to PEM formated key" << std::endl;
+        os << std::endl;
+        os << "*If you serve more than one location, these parameters will be ignored and use those of the first location served." << std::endl;
+        os << std::endl;
+        os << "Caveat: This functionality is in BETA state. If you experience any issue with this, please contact: support@mega.nz" << std::endl;
+        os << std::endl;
     }
 #endif
     else if (!strcmp(command, "exclude"))
     {
-        os << "Manages exclusions in syncs." << endl;
-        os << endl;
-        os << "Options:" << endl;
-        os << " -a pattern1 pattern2 ..." << "\t" << "adds pattern(s) to the exclusion list" << endl;
-        os << "                         " << "\t" << "          (* and ? wildcards allowed)" << endl;
-        os << " -d pattern1 pattern2 ..." << "\t" << "deletes pattern(s) from the exclusion list" << endl;
-        os << " --restart-syncs" << "\t" << "Try to restart synchronizations." << endl;
+        os << "Manages exclusions in syncs." << std::endl;
+        os << std::endl;
+        os << "Options:" << std::endl;
+        os << " -a pattern1 pattern2 ..." << "\t" << "adds pattern(s) to the exclusion list" << std::endl;
+        os << "                         " << "\t" << "          (* and ? wildcards allowed)" << std::endl;
+        os << " -d pattern1 pattern2 ..." << "\t" << "deletes pattern(s) from the exclusion list" << std::endl;
+        os << " --restart-syncs" << "\t" << "Try to restart synchronizations." << std::endl;
 
-        os << endl;
-        os << "Changes will not be applied inmediately to actions being performed in active syncs. " << endl;
-        os << "After adding/deleting patterns, you might want to: " << endl;
-        os << " a) disable/reenable synchronizations manually" << endl;
-        os << " b) restart MEGAcmd server" << endl;
-        os << " c) use --restart-syncs flag. Caveats:" << endl;
-        os << "  This will cause active transfers to be restarted" << endl;
-        os << "  In certain cases --restart-syncs might be unable to re-enable a synchronization. " << endl;
-        os << "  In such case, you will need to manually resume it or restart MEGAcmd server." << endl;
+        os << std::endl;
+        os << "Changes will not be applied inmediately to actions being performed in active syncs. " << std::endl;
+        os << "After adding/deleting patterns, you might want to: " << std::endl;
+        os << " a) disable/reenable synchronizations manually" << std::endl;
+        os << " b) restart MEGAcmd server" << std::endl;
+        os << " c) use --restart-syncs flag. Caveats:" << std::endl;
+        os << "  This will cause active transfers to be restarted" << std::endl;
+        os << "  In certain cases --restart-syncs might be unable to re-enable a synchronization. " << std::endl;
+        os << "  In such case, you will need to manually resume it or restart MEGAcmd server." << std::endl;
     }
     else if (!strcmp(command, "sync"))
     {
-        os << "Controls synchronizations" << endl;
-        os << endl;
-        os << "If no argument is provided, it lists current configured synchronizations" << endl;
-        os << endl;
-        os << "If provided local and remote paths, it will start synchronizing " << endl;
-        os << " a local folder into a remote folder" << endl;
-        os << endl;
-        os << "If an ID/local path is provided, it will list such synchronization " << endl;
-        os << " unless an option is specified." << endl;
-        os << endl;
-        os << "Options:" << endl;
-        os << "-d" << " " << "ID|localpath" << "\t" << "deletes a synchronization" << endl;
-        os << "-s" << " " << "ID|localpath" << "\t" << "stops(pauses) a synchronization" << endl;
-        os << "-r" << " " << "ID|localpath" << "\t" << "resumes a synchronization" << endl;
-        os << " --path-display-size=N" << "\t" << "Use a fixed size of N characters for paths" << endl;
+        os << "Controls synchronizations" << std::endl;
+        os << std::endl;
+        os << "If no argument is provided, it lists current configured synchronizations" << std::endl;
+        os << std::endl;
+        os << "If provided local and remote paths, it will start synchronizing " << std::endl;
+        os << " a local folder into a remote folder" << std::endl;
+        os << std::endl;
+        os << "If an ID/local path is provided, it will list such synchronization " << std::endl;
+        os << " unless an option is specified." << std::endl;
+        os << std::endl;
+        os << "Options:" << std::endl;
+        os << "-d" << " " << "ID|localpath" << "\t" << "deletes a synchronization" << std::endl;
+        os << "-s" << " " << "ID|localpath" << "\t" << "stops(pauses) a synchronization" << std::endl;
+        os << "-r" << " " << "ID|localpath" << "\t" << "resumes a synchronization" << std::endl;
+        os << " --path-display-size=N" << "\t" << "Use a fixed size of N characters for paths" << std::endl;
     }
     else if (!strcmp(command, "backup"))
     {
-        os << "Controls backups" << endl;
-        os << endl;
-        os << "This command can be used to configure and control backups. " << endl;
-        os << "A tutorial can be found here: https://github.com/meganz/MEGAcmd/blob/master/contrib/docs/BACKUPS.md" << endl;
-        os << endl;
-        os << "If no argument is given it will list the configured backups" << endl;
-        os << " To get extra info on backups use -l or -h (see Options below)" << endl;
-        os << endl;
-        os << "When a backup of a folder (localfolder) is established in a remote folder (remotepath)" << endl;
-        os << " MEGAcmd will create subfolder within the remote path with names like: \"localfoldername_bk_TIME\"" << endl;
-        os << " which shall contain a backup of the local folder at that specific time" << endl;
-        os << "In order to configure a backup you need to specify the local and remote paths, " << endl;
-        os << "the period and max number of backups to store (see Configuration Options below)." << endl;
-        os << "Once configured, you can see extended info asociated to the backup (See Display Options)" << endl;
-        os << "Notice that MEGAcmd server need to be running for backups to be created." << endl;
-        os << endl;
-        os << "Display Options:" << endl;
-        os << "-l\t" << "Show extended info: period, max number, next scheduled backup" << endl;
-        os << "  \t" << " or the status of current/last backup" << endl;
-        os << "-h\t" << "Show history of created backups" << endl;
-        os << "  \t" << "Backup states:" << endl;
-        os << "  \t"  << "While a backup is being performed, the backup will be considered and labeled as ONGOING" << endl;
-        os << "  \t"  << "If a transfer is cancelled or fails, the backup will be considered INCOMPLETE" << endl;
-        os << "  \t"  << "If a backup is aborted (see -a), all the transfers will be canceled and the backup be ABORTED" << endl;
-        os << "  \t"  << "If MEGAcmd server stops during a transfer, it will be considered MISCARRIED" << endl;
-        os << "  \t"  << "  Notice that currently when MEGAcmd server is restarted, ongoing and scheduled transfers " << endl;
-        os << "  \t"  << "  will be carried out nevertheless." << endl;
+        os << "Controls backups" << std::endl;
+        os << std::endl;
+        os << "This command can be used to configure and control backups. " << std::endl;
+        os << "A tutorial can be found here: https://github.com/meganz/MEGAcmd/blob/master/contrib/docs/BACKUPS.md" << std::endl;
+        os << std::endl;
+        os << "If no argument is given it will list the configured backups" << std::endl;
+        os << " To get extra info on backups use -l or -h (see Options below)" << std::endl;
+        os << std::endl;
+        os << "When a backup of a folder (localfolder) is established in a remote folder (remotepath)" << std::endl;
+        os << " MEGAcmd will create subfolder within the remote path with names like: \"localfoldername_bk_TIME\"" << std::endl;
+        os << " which shall contain a backup of the local folder at that specific time" << std::endl;
+        os << "In order to configure a backup you need to specify the local and remote paths, " << std::endl;
+        os << "the period and max number of backups to store (see Configuration Options below)." << std::endl;
+        os << "Once configured, you can see extended info asociated to the backup (See Display Options)" << std::endl;
+        os << "Notice that MEGAcmd server need to be running for backups to be created." << std::endl;
+        os << std::endl;
+        os << "Display Options:" << std::endl;
+        os << "-l\t" << "Show extended info: period, max number, next scheduled backup" << std::endl;
+        os << "  \t" << " or the status of current/last backup" << std::endl;
+        os << "-h\t" << "Show history of created backups" << std::endl;
+        os << "  \t" << "Backup states:" << std::endl;
+        os << "  \t"  << "While a backup is being performed, the backup will be considered and labeled as ONGOING" << std::endl;
+        os << "  \t"  << "If a transfer is cancelled or fails, the backup will be considered INCOMPLETE" << std::endl;
+        os << "  \t"  << "If a backup is aborted (see -a), all the transfers will be canceled and the backup be ABORTED" << std::endl;
+        os << "  \t"  << "If MEGAcmd server stops during a transfer, it will be considered MISCARRIED" << std::endl;
+        os << "  \t"  << "  Notice that currently when MEGAcmd server is restarted, ongoing and scheduled transfers " << std::endl;
+        os << "  \t"  << "  will be carried out nevertheless." << std::endl;
         os << "  \t"  << "If MEGAcmd server is not running when a backup is scheduled and the time for the next one has already arrived,"
-              " an empty BACKUP will be created with state SKIPPED" << endl;
-        os << "  \t"  << "If a backup(1) is ONGOING and the time for the next backup(2) arrives, it won't start untill the previous one(1) " << endl;
-        os << "  \t"  << " is completed, and if by the time the first one(1) ends the time for the next one(3) has already arrived," << endl;
-        os << "  \t"  << " an empty BACKUP(2) will be created with state SKIPPED" << endl;
-        os << " --path-display-size=N" << "\t" << "Use a fixed size of N characters for paths" << endl;
-        os << endl;
-        os << "Configuration Options:" << endl;
-        os << "--period=\"PERIODSTRING\"\t" << "Period: either time in TIMEFORMAT (see below) or a cron like expression" << endl;
-        os << "                       \t" << " Cron like period is formatted as follows" << endl;
-        os << "                       \t" << "  - - - - - -" << endl;
-        os << "                       \t" << "  | | | | | |" << endl;
-        os << "                       \t" << "  | | | | | |" << endl;
-        os << "                       \t" << "  | | | | | +---- Day of the Week   (range: 1-7, 1 standing for Monday)" << endl;
-        os << "                       \t" << "  | | | | +------ Month of the Year (range: 1-12)" << endl;
-        os << "                       \t" << "  | | | +-------- Day of the Month  (range: 1-31)" << endl;
-        os << "                       \t" << "  | | +---------- Hour              (range: 0-23)" << endl;
-        os << "                       \t" << "  | +------------ Minute            (range: 0-59)" << endl;
-        os << "                       \t" << "  +-------------- Second            (range: 0-59)" << endl;
-        os << "                       \t" << " examples:" << endl;
-        os << "                       \t" << "  - daily at 04:00:00 (UTC): \"0 0 4 * * *\"" << endl;
-        os << "                       \t" << "  - every 15th day at 00:00:00 (UTC) \"0 0 0 15 * *\"" << endl;
-        os << "                       \t" << "  - mondays at 04.30.00 (UTC): \"0 30 4 * * 1\"" << endl;
-        os << "                       \t" << " TIMEFORMAT can be expressed in hours(h), days(d), " << endl;
-        os << "                       \t"  << "   minutes(M), seconds(s), months(m) or years(y)" << endl;
-        os << "                       \t" << "   e.g. \"1m12d3h\" indicates 1 month, 12 days and 3 hours" << endl;
-        os << "                       \t" << "  Notice that this is an uncertain measure since not all months" << endl;
-        os << "                       \t" << "  last the same and Daylight saving time changes are not considered" << endl;
-        os << "                       \t" << "  If possible use a cron like expresion" << endl;
-        os << "                       \t" << "Notice: regardless of the period expresion, the first time you establish a backup," << endl;
-        os << "                       \t" << " it will be created inmediately" << endl;
-        os << "--num-backups=N\t" << "Maximum number of backups to store" << endl;
-        os << "                 \t" << " After creating the backup (N+1) the oldest one will be deleted" << endl;
-        os << "                 \t" << "  That might not be true in case there are incomplete backups:" << endl;
-        os << "                 \t" << "   in order not to lose data, at least one COMPLETE backup will be kept" << endl;
-        os << "Use backup TAG|localpath --option=VALUE to modify existing backups" << endl;
-        os << endl;
-        os << "Management Options:" << endl;
-        os << "-d TAG|localpath\t" << "Removes a backup by its TAG or local path" << endl;
-        os << "                \t" << " Folders created by backup won't be deleted" << endl;
-        os << "-a TAG|localpath\t" << "Aborts ongoing backup" << endl;
-        os << endl;
-        os << "Caveat: This functionality is in BETA state. If you experience any issue with this, please contact: support@mega.nz" << endl;
-        os << endl;
+              " an empty BACKUP will be created with state SKIPPED" << std::endl;
+        os << "  \t"  << "If a backup(1) is ONGOING and the time for the next backup(2) arrives, it won't start untill the previous one(1) " << std::endl;
+        os << "  \t"  << " is completed, and if by the time the first one(1) ends the time for the next one(3) has already arrived," << std::endl;
+        os << "  \t"  << " an empty BACKUP(2) will be created with state SKIPPED" << std::endl;
+        os << " --path-display-size=N" << "\t" << "Use a fixed size of N characters for paths" << std::endl;
+        os << std::endl;
+        os << "Configuration Options:" << std::endl;
+        os << "--period=\"PERIODSTRING\"\t" << "Period: either time in TIMEFORMAT (see below) or a cron like expression" << std::endl;
+        os << "                       \t" << " Cron like period is formatted as follows" << std::endl;
+        os << "                       \t" << "  - - - - - -" << std::endl;
+        os << "                       \t" << "  | | | | | |" << std::endl;
+        os << "                       \t" << "  | | | | | |" << std::endl;
+        os << "                       \t" << "  | | | | | +---- Day of the Week   (range: 1-7, 1 standing for Monday)" << std::endl;
+        os << "                       \t" << "  | | | | +------ Month of the Year (range: 1-12)" << std::endl;
+        os << "                       \t" << "  | | | +-------- Day of the Month  (range: 1-31)" << std::endl;
+        os << "                       \t" << "  | | +---------- Hour              (range: 0-23)" << std::endl;
+        os << "                       \t" << "  | +------------ Minute            (range: 0-59)" << std::endl;
+        os << "                       \t" << "  +-------------- Second            (range: 0-59)" << std::endl;
+        os << "                       \t" << " examples:" << std::endl;
+        os << "                       \t" << "  - daily at 04:00:00 (UTC): \"0 0 4 * * *\"" << std::endl;
+        os << "                       \t" << "  - every 15th day at 00:00:00 (UTC) \"0 0 0 15 * *\"" << std::endl;
+        os << "                       \t" << "  - mondays at 04.30.00 (UTC): \"0 30 4 * * 1\"" << std::endl;
+        os << "                       \t" << " TIMEFORMAT can be expressed in hours(h), days(d), " << std::endl;
+        os << "                       \t"  << "   minutes(M), seconds(s), months(m) or years(y)" << std::endl;
+        os << "                       \t" << "   e.g. \"1m12d3h\" indicates 1 month, 12 days and 3 hours" << std::endl;
+        os << "                       \t" << "  Notice that this is an uncertain measure since not all months" << std::endl;
+        os << "                       \t" << "  last the same and Daylight saving time changes are not considered" << std::endl;
+        os << "                       \t" << "  If possible use a cron like expresion" << std::endl;
+        os << "                       \t" << "Notice: regardless of the period expresion, the first time you establish a backup," << std::endl;
+        os << "                       \t" << " it will be created inmediately" << std::endl;
+        os << "--num-backups=N\t" << "Maximum number of backups to store" << std::endl;
+        os << "                 \t" << " After creating the backup (N+1) the oldest one will be deleted" << std::endl;
+        os << "                 \t" << "  That might not be true in case there are incomplete backups:" << std::endl;
+        os << "                 \t" << "   in order not to lose data, at least one COMPLETE backup will be kept" << std::endl;
+        os << "Use backup TAG|localpath --option=VALUE to modify existing backups" << std::endl;
+        os << std::endl;
+        os << "Management Options:" << std::endl;
+        os << "-d TAG|localpath\t" << "Removes a backup by its TAG or local path" << std::endl;
+        os << "                \t" << " Folders created by backup won't be deleted" << std::endl;
+        os << "-a TAG|localpath\t" << "Aborts ongoing backup" << std::endl;
+        os << std::endl;
+        os << "Caveat: This functionality is in BETA state. If you experience any issue with this, please contact: support@mega.nz" << std::endl;
+        os << std::endl;
     }
     else if (!strcmp(command, "export"))
     {
-        os << "Prints/Modifies the status of current exports" << endl;
-        os << endl;
-        os << "Options:" << endl;
+        os << "Prints/Modifies the status of current exports" << std::endl;
+        os << std::endl;
+        os << "Options:" << std::endl;
 #ifdef USE_PCRE
-        os << " --use-pcre" << "\t" << "use PCRE expressions" << endl;
+        os << " --use-pcre" << "\t" << "use PCRE expressions" << std::endl;
 #endif
-        os << " -a" << "\t" << "Adds an export (or modifies it if existing)" << endl;
-        os << " --expire=TIMEDELAY" << "\t" << "Determines the expiration time of a node." << endl;
-        os << "                   " << "\t" << "   It indicates the delay in hours(h), days(d), " << endl;
-        os << "                   " << "\t"  << "   minutes(M), seconds(s), months(m) or years(y)" << endl;
-        os << "                   " << "\t" << "   e.g. \"1m12d3h\" establish an expiration time 1 month, " << endl;
-        os << "                   " << "\t"  << "   12 days and 3 hours after the current moment" << endl;
-        os << " -f" << "\t" << "Implicitly accept copyright terms (only shown the first time an export is made)" << endl;
-        os << "   " << "\t" << "MEGA respects the copyrights of others and requires that users of the MEGA cloud service " << endl;
-        os << "   " << "\t" << "comply with the laws of copyright." << endl;
-        os << "   " << "\t" << "You are strictly prohibited from using the MEGA cloud service to infringe copyrights." << endl;
-        os << "   " << "\t" << "You may not upload, download, store, share, display, stream, distribute, email, link to, " << endl;
-        os << "   " << "\t" << "transmit or otherwise make available any files, data or content that infringes any copyright " << endl;
-        os << "   " << "\t" << "or other proprietary rights of any person or entity." << endl;
-        os << " -d" << "\t" << "Deletes an export" << endl;
-        os << endl;
-        os << "If a remote path is given it'll be used to add/delete or in case of no option selected," << endl;
-        os << " it will display all the exports existing in the tree of that path" << endl;
+        os << " -a" << "\t" << "Adds an export (or modifies it if existing)" << std::endl;
+        os << " --expire=TIMEDELAY" << "\t" << "Determines the expiration time of a node." << std::endl;
+        os << "                   " << "\t" << "   It indicates the delay in hours(h), days(d), " << std::endl;
+        os << "                   " << "\t"  << "   minutes(M), seconds(s), months(m) or years(y)" << std::endl;
+        os << "                   " << "\t" << "   e.g. \"1m12d3h\" establish an expiration time 1 month, " << std::endl;
+        os << "                   " << "\t"  << "   12 days and 3 hours after the current moment" << std::endl;
+        os << " -f" << "\t" << "Implicitly accept copyright terms (only shown the first time an export is made)" << std::endl;
+        os << "   " << "\t" << "MEGA respects the copyrights of others and requires that users of the MEGA cloud service " << std::endl;
+        os << "   " << "\t" << "comply with the laws of copyright." << std::endl;
+        os << "   " << "\t" << "You are strictly prohibited from using the MEGA cloud service to infringe copyrights." << std::endl;
+        os << "   " << "\t" << "You may not upload, download, store, share, display, stream, distribute, email, link to, " << std::endl;
+        os << "   " << "\t" << "transmit or otherwise make available any files, data or content that infringes any copyright " << std::endl;
+        os << "   " << "\t" << "or other proprietary rights of any person or entity." << std::endl;
+        os << " -d" << "\t" << "Deletes an export" << std::endl;
+        os << std::endl;
+        os << "If a remote path is given it'll be used to add/delete or in case of no option selected," << std::endl;
+        os << " it will display all the exports existing in the tree of that path" << std::endl;
     }
     else if (!strcmp(command, "share"))
     {
-        os << "Prints/Modifies the status of current shares" << endl;
-        os << endl;
-        os << "Options:" << endl;
+        os << "Prints/Modifies the status of current shares" << std::endl;
+        os << std::endl;
+        os << "Options:" << std::endl;
 #ifdef USE_PCRE
-        os << " --use-pcre" << "\t" << "use PCRE expressions" << endl;
+        os << " --use-pcre" << "\t" << "use PCRE expressions" << std::endl;
 #endif
-        os << " -p" << "\t" << "Show pending shares" << endl;
-        os << " --with=email" << "\t" << "Determines the email of the user to [no longer] share with" << endl;
-        os << " -d" << "\t" << "Stop sharing with the selected user" << endl;
-        os << " -a" << "\t" << "Adds a share (or modifies it if existing)" << endl;
-        os << " --level=LEVEL" << "\t" << "Level of acces given to the user" << endl;
-        os << "              " << "\t" << "0: " << "Read access" << endl;
-        os << "              " << "\t" << "1: " << "Read and write" << endl;
-        os << "              " << "\t" << "2: " << "Full access" << endl;
-        os << "              " << "\t" << "3: " << "Owner access" << endl;
-        os << endl;
-        os << "If a remote path is given it'll be used to add/delete or in case " << endl;
-        os << " of no option selected, it will display all the shares existing " << endl;
-        os << " in the tree of that path" << endl;
-        os << endl;
-        os << "When sharing a folder with a user that is not a contact (see \"users --help\")" << endl;
-        os << "  the share will be in a pending state. You can list pending shares with" << endl;
-        os << " \"share -p\". He would need to accept your invitation (see \"ipc\")" << endl;
-        os << endl;
-        os << "If someone has shared something with you, it will be listed as a root folder" << endl;
-        os << " Use \"mount\" to list folders shared with you" << endl;
+        os << " -p" << "\t" << "Show pending shares" << std::endl;
+        os << " --with=email" << "\t" << "Determines the email of the user to [no longer] share with" << std::endl;
+        os << " -d" << "\t" << "Stop sharing with the selected user" << std::endl;
+        os << " -a" << "\t" << "Adds a share (or modifies it if existing)" << std::endl;
+        os << " --level=LEVEL" << "\t" << "Level of acces given to the user" << std::endl;
+        os << "              " << "\t" << "0: " << "Read access" << std::endl;
+        os << "              " << "\t" << "1: " << "Read and write" << std::endl;
+        os << "              " << "\t" << "2: " << "Full access" << std::endl;
+        os << "              " << "\t" << "3: " << "Owner access" << std::endl;
+        os << std::endl;
+        os << "If a remote path is given it'll be used to add/delete or in case " << std::endl;
+        os << " of no option selected, it will display all the shares existing " << std::endl;
+        os << " in the tree of that path" << std::endl;
+        os << std::endl;
+        os << "When sharing a folder with a user that is not a contact (see \"users --help\")" << std::endl;
+        os << "  the share will be in a pending state. You can list pending shares with" << std::endl;
+        os << " \"share -p\". He would need to accept your invitation (see \"ipc\")" << std::endl;
+        os << std::endl;
+        os << "If someone has shared something with you, it will be listed as a root folder" << std::endl;
+        os << " Use \"mount\" to list folders shared with you" << std::endl;
     }
     else if (!strcmp(command, "invite"))
     {
-        os << "Invites a contact / deletes an invitation" << endl;
-        os << endl;
-        os << "Options:" << endl;
-        os << " -d" << "\t" << "Deletes invitation" << endl;
-        os << " -r" << "\t" << "Sends the invitation again" << endl;
-        os << " --message=\"MESSAGE\"" << "\t" << "Sends inviting message" << endl;
-        os << endl;
-        os << "Use \"showpcr\" to browse invitations" << endl;
-        os << "Use \"ipc\" to manage invitations received" << endl;
-        os << "Use \"users\" to see contacts" << endl;
+        os << "Invites a contact / deletes an invitation" << std::endl;
+        os << std::endl;
+        os << "Options:" << std::endl;
+        os << " -d" << "\t" << "Deletes invitation" << std::endl;
+        os << " -r" << "\t" << "Sends the invitation again" << std::endl;
+        os << " --message=\"MESSAGE\"" << "\t" << "Sends inviting message" << std::endl;
+        os << std::endl;
+        os << "Use \"showpcr\" to browse invitations" << std::endl;
+        os << "Use \"ipc\" to manage invitations received" << std::endl;
+        os << "Use \"users\" to see contacts" << std::endl;
     }
     if (!strcmp(command, "ipc"))
     {
-        os << "Manages contact incoming invitations." << endl;
-        os << endl;
-        os << "Options:" << endl;
-        os << " -a" << "\t" << "Accepts invitation" << endl;
-        os << " -d" << "\t" << "Rejects invitation" << endl;
-        os << " -i" << "\t" << "Ignores invitation [WARNING: do not use unless you know what you are doing]" << endl;
-        os << endl;
-        os << "Use \"invite\" to send/remove invitations to other users" << endl;
-        os << "Use \"showpcr\" to browse incoming/outgoing invitations" << endl;
-        os << "Use \"users\" to see contacts" << endl;
+        os << "Manages contact incoming invitations." << std::endl;
+        os << std::endl;
+        os << "Options:" << std::endl;
+        os << " -a" << "\t" << "Accepts invitation" << std::endl;
+        os << " -d" << "\t" << "Rejects invitation" << std::endl;
+        os << " -i" << "\t" << "Ignores invitation [WARNING: do not use unless you know what you are doing]" << std::endl;
+        os << std::endl;
+        os << "Use \"invite\" to send/remove invitations to other users" << std::endl;
+        os << "Use \"showpcr\" to browse incoming/outgoing invitations" << std::endl;
+        os << "Use \"users\" to see contacts" << std::endl;
     }
     if (!strcmp(command, "masterkey"))
     {
-        os << "Shows your master key." << endl;
-        os << endl;
-        os << "Getting the master key and keeping it in a secure location enables you " << endl;
-        os << " to set a new password without data loss." << endl;
-        os << "Always keep physical control of your master key " << endl;
-        os << " (e.g. on a client device, external storage, or print)" << endl;
+        os << "Shows your master key." << std::endl;
+        os << std::endl;
+        os << "Getting the master key and keeping it in a secure location enables you " << std::endl;
+        os << " to set a new password without data loss." << std::endl;
+        os << "Always keep physical control of your master key " << std::endl;
+        os << " (e.g. on a client device, external storage, or print)" << std::endl;
     }
     if (!strcmp(command, "showpcr"))
     {
-        os << "Shows incoming and outgoing contact requests." << endl;
-        os << endl;
-        os << "Options:" << endl;
-        os << " --in" << "\t" << "Shows incoming requests" << endl;
-        os << " --out" << "\t" << "Shows outgoing invitations" << endl;
-        os << endl;
-        os << "Use \"ipc\" to manage invitations received" << endl;
-        os << "Use \"users\" to see contacts" << endl;
+        os << "Shows incoming and outgoing contact requests." << std::endl;
+        os << std::endl;
+        os << "Options:" << std::endl;
+        os << " --in" << "\t" << "Shows incoming requests" << std::endl;
+        os << " --out" << "\t" << "Shows outgoing invitations" << std::endl;
+        os << std::endl;
+        os << "Use \"ipc\" to manage invitations received" << std::endl;
+        os << "Use \"users\" to see contacts" << std::endl;
     }
     else if (!strcmp(command, "users"))
     {
-        os << "List contacts" << endl;
-        os << endl;
-        os << "Options:" << endl;
-        os << " -s" << "\t" << "Show shared folders with listed contacts" << endl;
-        os << " -h" << "\t" << "Show all contacts (hidden, blocked, ...)" << endl;
-        os << " -n" << "\t" << "Show users names" << endl;
-        os << " -d" << "\tcontact@email " << "Deletes the specified contact" << endl;
-        os << endl;
-        os << "Use \"invite\" to send/remove invitations to other users" << endl;
-        os << "Use \"showpcr\" to browse incoming/outgoing invitations" << endl;
-        os << "Use \"ipc\" to manage invitations received" << endl;
-        os << "Use \"users\" to see contacts" << endl;
+        os << "List contacts" << std::endl;
+        os << std::endl;
+        os << "Options:" << std::endl;
+        os << " -s" << "\t" << "Show shared folders with listed contacts" << std::endl;
+        os << " -h" << "\t" << "Show all contacts (hidden, blocked, ...)" << std::endl;
+        os << " -n" << "\t" << "Show users names" << std::endl;
+        os << " -d" << "\tcontact@email " << "Deletes the specified contact" << std::endl;
+        os << std::endl;
+        os << "Use \"invite\" to send/remove invitations to other users" << std::endl;
+        os << "Use \"showpcr\" to browse incoming/outgoing invitations" << std::endl;
+        os << "Use \"ipc\" to manage invitations received" << std::endl;
+        os << "Use \"users\" to see contacts" << std::endl;
     }
     else if (!strcmp(command, "speedlimit"))
     {
-        os << "Displays/modifies upload/download rate limits" << endl;
-        os << " NEWLIMIT establish the new limit in size per second (0 = no limit)" << endl;
-        os << " NEWLIMIT may include (B)ytes, (K)ilobytes, (M)egabytes, (G)igabytes & (T)erabytes." << endl;
-        os << "  Examples: \"1m12k3B\" \"3M\". If no units are given, bytes are assumed" << endl;
-        os << endl;
-        os << "Options:" << endl;
-        os << " -d" << "\t" << "Download speed limit" << endl;
-        os << " -u" << "\t" << "Upload speed limit" << endl;
-        os << " -h" << "\t" << "Human readable" << endl;
-        os << endl;
-        os << "Notice: this limit will be saved for the next time you execute MEGAcmd server. They will be removed if you logout." << endl;
+        os << "Displays/modifies upload/download rate limits" << std::endl;
+        os << " NEWLIMIT establish the new limit in size per second (0 = no limit)" << std::endl;
+        os << " NEWLIMIT may include (B)ytes, (K)ilobytes, (M)egabytes, (G)igabytes & (T)erabytes." << std::endl;
+        os << "  Examples: \"1m12k3B\" \"3M\". If no units are given, bytes are assumed" << std::endl;
+        os << std::endl;
+        os << "Options:" << std::endl;
+        os << " -d" << "\t" << "Download speed limit" << std::endl;
+        os << " -u" << "\t" << "Upload speed limit" << std::endl;
+        os << " -h" << "\t" << "Human readable" << std::endl;
+        os << std::endl;
+        os << "Notice: this limit will be saved for the next time you execute MEGAcmd server. They will be removed if you logout." << std::endl;
     }
     else if (!strcmp(command, "killsession"))
     {
-        os << "Kills a session of current user." << endl;
-        os << endl;
-        os << "Options:" << endl;
-        os << " -a" << "\t" << "kills all sessions except the current one" << endl;
-        os << endl;
-        os << "To see all sessions use \"whoami -l\"" << endl;
+        os << "Kills a session of current user." << std::endl;
+        os << std::endl;
+        os << "Options:" << std::endl;
+        os << " -a" << "\t" << "kills all sessions except the current one" << std::endl;
+        os << std::endl;
+        os << "To see all sessions use \"whoami -l\"" << std::endl;
     }
     else if (!strcmp(command, "whoami"))
     {
-        os << "Print info of the user" << endl;
-        os << endl;
-        os << "Options:" << endl;
-        os << " -l" << "\t" << "Show extended info: total storage used, storage per main folder " << endl;
-        os << "   " << "\t" << "(see mount), pro level, account balance, and also the active sessions" << endl;
+        os << "Print info of the user" << std::endl;
+        os << std::endl;
+        os << "Options:" << std::endl;
+        os << " -l" << "\t" << "Show extended info: total storage used, storage per main folder " << std::endl;
+        os << "   " << "\t" << "(see mount), pro level, account balance, and also the active sessions" << std::endl;
     }
     if (!strcmp(command, "passwd"))
     {
-        os << "Modifies user password" << endl;
+        os << "Modifies user password" << std::endl;
     }
     else if (!strcmp(command, "reload"))
     {
-        os << "Forces a reload of the remote files of the user" << endl;
-        os << "It will also resume synchronizations." << endl;
+        os << "Forces a reload of the remote files of the user" << std::endl;
+        os << "It will also resume synchronizations." << std::endl;
     }
     else if (!strcmp(command, "version"))
     {
-        os << "Prints MEGAcmd versioning and extra info" << endl;
-        os << endl;
-        os << "Options:" << endl;
-        os << " -c" << "\t" << "Shows changelog for the current version" << endl;
-        os << " -l" << "\t" << "Show extended info: MEGA SDK version and features enabled" << endl;
+        os << "Prints MEGAcmd versioning and extra info" << std::endl;
+        os << std::endl;
+        os << "Options:" << std::endl;
+        os << " -c" << "\t" << "Shows changelog for the current version" << std::endl;
+        os << " -l" << "\t" << "Show extended info: MEGA SDK version and features enabled" << std::endl;
     }
     else if (!strcmp(command, "thumbnail"))
     {
-        os << "To download/upload the thumbnail of a file." << endl;
-        os << " If no -s is inidicated, it will download the thumbnail." << endl;
-        os << endl;
-        os << "Options:" << endl;
-        os << " -s" << "\t" << "Sets the thumbnail to the specified file" << endl;
+        os << "To download/upload the thumbnail of a file." << std::endl;
+        os << " If no -s is inidicated, it will download the thumbnail." << std::endl;
+        os << std::endl;
+        os << "Options:" << std::endl;
+        os << " -s" << "\t" << "Sets the thumbnail to the specified file" << std::endl;
     }
     else if (!strcmp(command, "preview"))
     {
-        os << "To download/upload the preview of a file." << endl;
-        os << " If no -s is inidicated, it will download the preview." << endl;
-        os << endl;
-        os << "Options:" << endl;
-        os << " -s" << "\t" << "Sets the preview to the specified file" << endl;
+        os << "To download/upload the preview of a file." << std::endl;
+        os << " If no -s is inidicated, it will download the preview." << std::endl;
+        os << std::endl;
+        os << "Options:" << std::endl;
+        os << " -s" << "\t" << "Sets the preview to the specified file" << std::endl;
     }
     else if (!strcmp(command, "find"))
     {
-        os << "Find nodes matching a pattern" << endl;
-        os << endl;
-        os << "Options:" << endl;
+        os << "Find nodes matching a pattern" << std::endl;
+        os << std::endl;
+        os << "Options:" << std::endl;
         os << " --pattern=PATTERN" << "\t" << "Pattern to match";
-        os << " (" << getsupportedregexps() << ") " << endl;
-        os << " --mtime=TIMECONSTRAIN" << "\t" << "Determines time constrains, in the form: [+-]TIMEVALUE" << endl;
-        os << "                      " << "\t" << "  TIMEVALUE may include hours(h), days(d), minutes(M)," << endl;
-        os << "                      " << "\t" << "   seconds(s), months(m) or years(y)" << endl;
-        os << "                      " << "\t" << "  Examples:" << endl;
-        os << "                      " << "\t" << "   \"+1m12d3h\" shows files modified before 1 month, " << endl;
-        os << "                      " << "\t" << "    12 days and 3 hours the current moment" << endl;
-        os << "                      " << "\t" << "   \"-3h\" shows files modified within the last 3 hours" << endl;
-        os << "                      " << "\t" << "   \"-3d+1h\" shows files modified in the last 3 days prior to the last hour" << endl;
-        os << " --size=SIZECONSTRAIN" << "\t" << "Determines size constrains, in the form: [+-]TIMEVALUE" << endl;
-        os << "                      " << "\t" << "  TIMEVALUE may include (B)ytes, (K)ilobytes, (M)egabytes, (G)igabytes & (T)erabytes" << endl;
-        os << "                      " << "\t" << "  Examples:" << endl;
-        os << "                      " << "\t" << "   \"+1m12k3B\" shows files bigger than 1 Mega, 12 Kbytes and 3Bytes" << endl;
-        os << "                      " << "\t" << "   \"-3M\" shows files smaller than 3 Megabytes" << endl;
-        os << "                      " << "\t" << "   \"-4M+100K\" shows files smaller than 4 Mbytes and bigger than 100 Kbytes" << endl;
+        os << " (" << getsupportedregexps() << ") " << std::endl;
+        os << " --mtime=TIMECONSTRAIN" << "\t" << "Determines time constrains, in the form: [+-]TIMEVALUE" << std::endl;
+        os << "                      " << "\t" << "  TIMEVALUE may include hours(h), days(d), minutes(M)," << std::endl;
+        os << "                      " << "\t" << "   seconds(s), months(m) or years(y)" << std::endl;
+        os << "                      " << "\t" << "  Examples:" << std::endl;
+        os << "                      " << "\t" << "   \"+1m12d3h\" shows files modified before 1 month, " << std::endl;
+        os << "                      " << "\t" << "    12 days and 3 hours the current moment" << std::endl;
+        os << "                      " << "\t" << "   \"-3h\" shows files modified within the last 3 hours" << std::endl;
+        os << "                      " << "\t" << "   \"-3d+1h\" shows files modified in the last 3 days prior to the last hour" << std::endl;
+        os << " --size=SIZECONSTRAIN" << "\t" << "Determines size constrains, in the form: [+-]TIMEVALUE" << std::endl;
+        os << "                      " << "\t" << "  TIMEVALUE may include (B)ytes, (K)ilobytes, (M)egabytes, (G)igabytes & (T)erabytes" << std::endl;
+        os << "                      " << "\t" << "  Examples:" << std::endl;
+        os << "                      " << "\t" << "   \"+1m12k3B\" shows files bigger than 1 Mega, 12 Kbytes and 3Bytes" << std::endl;
+        os << "                      " << "\t" << "   \"-3M\" shows files smaller than 3 Megabytes" << std::endl;
+        os << "                      " << "\t" << "   \"-4M+100K\" shows files smaller than 4 Mbytes and bigger than 100 Kbytes" << std::endl;
 #ifdef USE_PCRE
-        os << " --use-pcre" << "\t" << "use PCRE expressions" << endl;
+        os << " --use-pcre" << "\t" << "use PCRE expressions" << std::endl;
 #endif
-        os << " -l" << "\t" << "Prints file info" << endl;
+        os << " -l" << "\t" << "Prints file info" << std::endl;
 
     }
     else if(!strcmp(command,"debug") )
     {
-        os << "Enters debugging mode (HIGHLY VERBOSE)" << endl;
-        os << endl;
-        os << "For a finer control of log level see \"log --help\"" << endl;
+        os << "Enters debugging mode (HIGHLY VERBOSE)" << std::endl;
+        os << std::endl;
+        os << "For a finer control of log level see \"log --help\"" << std::endl;
     }
     else if (!strcmp(command, "quit") || !strcmp(command, "exit"))
     {
-        os << "Quits MEGAcmd" << endl;
-        os << endl;
-        os << "Notice that the session will still be active, and local caches available" << endl;
-        os << "The session will be resumed when the service is restarted" << endl;
+        os << "Quits MEGAcmd" << std::endl;
+        os << std::endl;
+        os << "Notice that the session will still be active, and local caches available" << std::endl;
+        os << "The session will be resumed when the service is restarted" << std::endl;
         if (getCurrentThreadIsCmdShell())
         {
-            os << endl;
-            os << "Be aware that this will exit both the interactive shell and the server." << endl;
-            os << "To only exit current shell and keep server running, use \"exit --only-shell\"" << endl;
+            os << std::endl;
+            os << "Be aware that this will exit both the interactive shell and the server." << std::endl;
+            os << "To only exit current shell and keep server running, use \"exit --only-shell\"" << std::endl;
         }
     }
     else if (!strcmp(command, "transfers"))
     {
-        os << "List or operate with transfers" << endl;
-        os << endl;
-        os << "If executed without option it will list the first 10 tranfers" << endl;
-        os << "Options:" << endl;
-        os << " -c (TAG|-a)" << "\t" << "Cancel transfer with TAG (or all with -a)" << endl;
-        os << " -p (TAG|-a)" << "\t" << "Pause transfer with TAG (or all with -a)" << endl;
-        os << " -r (TAG|-a)" << "\t" << "Resume transfer with TAG (or all with -a)" << endl;
-        os << " -only-uploads" << "\t" << "Show/Operate only upload transfers" << endl;
-        os << " -only-downloads" << "\t" << "Show/Operate only download transfers" << endl;
-        os << endl;
-        os << "Show options:" << endl;
-        os << " -show-syncs" << "\t" << "Show synchronization transfers" << endl;
-        os << " -show-completed" << "\t" << "Show completed transfers" << endl;
-        os << " -only-completed" << "\t" << "Show only completed download" << endl;
-        os << " --limit=N" << "\t" << "Show only first N transfers" << endl;
-        os << " --path-display-size=N" << "\t" << "Use a fixed size of N characters for paths" << endl;
+        os << "List or operate with transfers" << std::endl;
+        os << std::endl;
+        os << "If executed without option it will list the first 10 tranfers" << std::endl;
+        os << "Options:" << std::endl;
+        os << " -c (TAG|-a)" << "\t" << "Cancel transfer with TAG (or all with -a)" << std::endl;
+        os << " -p (TAG|-a)" << "\t" << "Pause transfer with TAG (or all with -a)" << std::endl;
+        os << " -r (TAG|-a)" << "\t" << "Resume transfer with TAG (or all with -a)" << std::endl;
+        os << " -only-uploads" << "\t" << "Show/Operate only upload transfers" << std::endl;
+        os << " -only-downloads" << "\t" << "Show/Operate only download transfers" << std::endl;
+        os << std::endl;
+        os << "Show options:" << std::endl;
+        os << " -show-syncs" << "\t" << "Show synchronization transfers" << std::endl;
+        os << " -show-completed" << "\t" << "Show completed transfers" << std::endl;
+        os << " -only-completed" << "\t" << "Show only completed download" << std::endl;
+        os << " --limit=N" << "\t" << "Show only first N transfers" << std::endl;
+        os << " --path-display-size=N" << "\t" << "Use a fixed size of N characters for paths" << std::endl;
     }
     return os.str();
 }
@@ -2282,16 +2282,16 @@ void printAvailableCommands(int extensive = 0)
         size_t k = 2*(validCommandsOrdered.size()/3)+validCommandsOrdered.size()%3;
         for (i = 0; i < validCommandsOrdered.size() && j < validCommandsOrdered.size()  && k < validCommandsOrdered.size(); i++, j++, k++)
         {
-            OUTSTREAM << "      " << setw(20) << left << validCommandsOrdered.at(i) <<  setw(20) << validCommandsOrdered.at(j)  <<  "      " << validCommandsOrdered.at(k) << endl;
+            OUTSTREAM << "      " << std::setw(20) << std::left << validCommandsOrdered.at(i) <<  std::setw(20) << validCommandsOrdered.at(j)  <<  "      " << validCommandsOrdered.at(k) << std::endl;
         }
         if (validCommandsOrdered.size()%3)
         {
-            OUTSTREAM << "      " << setw(20) <<  validCommandsOrdered.at(i);
+            OUTSTREAM << "      " << std::setw(20) <<  validCommandsOrdered.at(i);
             if (validCommandsOrdered.size()%3 > 1 )
             {
-                OUTSTREAM << setw(20) <<  validCommandsOrdered.at(j);
+                OUTSTREAM << std::setw(20) <<  validCommandsOrdered.at(j);
             }
-            OUTSTREAM << endl;
+            OUTSTREAM << std::endl;
         }
     }
     else
@@ -2304,10 +2304,10 @@ void printAvailableCommands(int extensive = 0)
                 {
                     unsigned int width = getNumberOfCols();
 
-                    OUTSTREAM <<  "<" << validCommandsOrdered.at(i) << ">" << endl;
+                    OUTSTREAM <<  "<" << validCommandsOrdered.at(i) << ">" << std::endl;
                     OUTSTREAM <<  getHelpStr(validCommandsOrdered.at(i).c_str());
                     for (unsigned int j = 0; j< width; j++) OUTSTREAM << "-";
-                    OUTSTREAM << endl;
+                    OUTSTREAM << std::endl;
                 }
                 else
                 {
@@ -2316,7 +2316,7 @@ void printAvailableCommands(int extensive = 0)
                     helpstr=string(helpstr,helpstr.find_first_of("\n")+1);
                     OUTSTREAM << ": " << string(helpstr,0,helpstr.find_first_of("\n"));
 
-                    OUTSTREAM << endl;
+                    OUTSTREAM << std::endl;
                 }
             }
         }
@@ -2424,7 +2424,7 @@ void executecommand(char* ptr)
     if (getFlag(&clflags, "help"))
     {
         string h = getHelpStr(thecommand.c_str());
-        OUTSTREAM << h << endl;
+        OUTSTREAM << h << std::endl;
         return;
     }
 
@@ -2464,84 +2464,84 @@ void executecommand(char* ptr)
                  theurl = url;
              }
 
-             OUTSTREAM << "MEGA offers different PRO plans to increase your allowed transfer quota and user storage." << endl;
-             OUTSTREAM << "Open the following link in your browser to obtain a PRO account: " << endl;
-             OUTSTREAM << "  " << theurl << endl;
+             OUTSTREAM << "MEGA offers different PRO plans to increase your allowed transfer quota and user storage." << std::endl;
+             OUTSTREAM << "Open the following link in your browser to obtain a PRO account: " << std::endl;
+             OUTSTREAM << "  " << theurl << std::endl;
 
              delete [] url;
         }
         else if (getFlag(&clflags,"non-interactive"))
         {
-            OUTSTREAM << "MEGAcmd features two modes of interaction:" << endl;
-            OUTSTREAM << " - interactive: entering commands in this shell. Enter \"help\" to list available commands" << endl;
-            OUTSTREAM << " - non-interactive: MEGAcmd is also listening to outside petitions" << endl;
-            OUTSTREAM << "For the non-interactive mode, there are client commands you can use. " << endl;
+            OUTSTREAM << "MEGAcmd features two modes of interaction:" << std::endl;
+            OUTSTREAM << " - interactive: entering commands in this shell. Enter \"help\" to list available commands" << std::endl;
+            OUTSTREAM << " - non-interactive: MEGAcmd is also listening to outside petitions" << std::endl;
+            OUTSTREAM << "For the non-interactive mode, there are client commands you can use. " << std::endl;
 #ifdef _WIN32
 
-            OUTSTREAM << "Along with the interactive shell, there should be several mega-*.bat scripts" << endl;
-            OUTSTREAM << "installed with MEGAcmd. You can use them writting their absolute paths, " << endl;
-            OUTSTREAM << "or including their location into your environment PATH and execute simply with mega-*" << endl;
-            OUTSTREAM << "If you use PowerShell, you can add the the location of the scripts to the PATH with:" << endl;
-            OUTSTREAM << "  $env:PATH += \";$env:LOCALAPPDATA\\MEGAcmd\"" << endl;
-            OUTSTREAM << "Client commands completion requires bash, hence, it is not available for Windows. " << endl;
-            OUTSTREAM << "You can add \" -o outputfile\" to save the output into a file instead of to standard output." << endl;
-            OUTSTREAM << endl;
+            OUTSTREAM << "Along with the interactive shell, there should be several mega-*.bat scripts" << std::endl;
+            OUTSTREAM << "installed with MEGAcmd. You can use them writting their absolute paths, " << std::endl;
+            OUTSTREAM << "or including their location into your environment PATH and execute simply with mega-*" << std::endl;
+            OUTSTREAM << "If you use PowerShell, you can add the the location of the scripts to the PATH with:" << std::endl;
+            OUTSTREAM << "  $env:PATH += \";$env:LOCALAPPDATA\\MEGAcmd\"" << std::endl;
+            OUTSTREAM << "Client commands completion requires bash, hence, it is not available for Windows. " << std::endl;
+            OUTSTREAM << "You can add \" -o outputfile\" to save the output into a file instead of to standard output." << std::endl;
+            OUTSTREAM << std::endl;
 
 #elif __MACH__
-            OUTSTREAM << "After installing the dmg, along with the interactive shell, client commands" << endl;
-            OUTSTREAM << "should be located at /Applications/MEGAcmd.app/Contents/MacOS" << endl;
-            OUTSTREAM << "If you wish to use the client commands from MacOS Terminal, open the Terminal and " << endl;
-            OUTSTREAM << "include the installation folder in the PATH. Typically:" << endl;
-            OUTSTREAM << endl;
-            OUTSTREAM << " export PATH=/Applications/MEGAcmd.app/Contents/MacOS:$PATH" << endl;
-            OUTSTREAM << endl;
-            OUTSTREAM << "And for bash completion, source megacmd_completion.sh:" << endl;
-            OUTSTREAM << " source /Applications/MEGAcmd.app/Contents/MacOS/megacmd_completion.sh" << endl;
+            OUTSTREAM << "After installing the dmg, along with the interactive shell, client commands" << std::endl;
+            OUTSTREAM << "should be located at /Applications/MEGAcmd.app/Contents/MacOS" << std::endl;
+            OUTSTREAM << "If you wish to use the client commands from MacOS Terminal, open the Terminal and " << std::endl;
+            OUTSTREAM << "include the installation folder in the PATH. Typically:" << std::endl;
+            OUTSTREAM << std::endl;
+            OUTSTREAM << " export PATH=/Applications/MEGAcmd.app/Contents/MacOS:$PATH" << std::endl;
+            OUTSTREAM << std::endl;
+            OUTSTREAM << "And for bash completion, source megacmd_completion.sh:" << std::endl;
+            OUTSTREAM << " source /Applications/MEGAcmd.app/Contents/MacOS/megacmd_completion.sh" << std::endl;
 #else
-            OUTSTREAM << "If you have installed MEGAcmd using one of the available packages" << endl;
-            OUTSTREAM << "both the interactive shell (mega-cmd) and the different client commands (mega-*) " << endl;
-            OUTSTREAM << "will be in your PATH (you might need to open your shell again). " << endl;
-            OUTSTREAM << "If you are using bash, you should also have autocompletion for client commands working. " << endl;
+            OUTSTREAM << "If you have installed MEGAcmd using one of the available packages" << std::endl;
+            OUTSTREAM << "both the interactive shell (mega-cmd) and the different client commands (mega-*) " << std::endl;
+            OUTSTREAM << "will be in your PATH (you might need to open your shell again). " << std::endl;
+            OUTSTREAM << "If you are using bash, you should also have autocompletion for client commands working. " << std::endl;
 
 #endif
         }
 #ifdef _WIN32
         else if (getFlag(&clflags,"unicode"))
         {
-            OUTSTREAM << "A great effort has been done so as to have MEGAcmd support non-ASCII characters." << endl;
-            OUTSTREAM << "However, it might still be consider in an experimantal state. You might experiment some issues." << endl;
-            OUTSTREAM << "If that is the case, do not hesistate to contact us so as to improve our support." << endl;
-            OUTSTREAM << endl;
-            OUTSTREAM << "Known issues: " << endl;
-            OUTSTREAM << endl;
-            OUTSTREAM << "In Windows, when executing a client command in non-interactive mode or the interactive shell " << endl;
-            OUTSTREAM << "Some symbols might not be printed. This is something expected, since your terminal (PowerShell/Command Prompt)" << endl;
-            OUTSTREAM << "is not able to draw those symbols. However you can use the non-interactive mode to have the output " << endl;
-            OUTSTREAM << "written into a file and open it with a graphic editor that supports them. The file will be UTF-8 encoded." << endl;
-            OUTSTREAM << "To do that, use \"-o outputfile\" with your mega-*.bat commands. (See \"help --non-interactive\")." << endl;
-            OUTSTREAM << "Please, restrain using \"> outputfile\" or piping the output into another command if you require unicode support" << endl;
-            OUTSTREAM << "because for instance, when piping, your terminal does not treat the output as binary; " << endl;
-            OUTSTREAM << "it will meddle with the encoding, resulting in unusable output." << endl;
-            OUTSTREAM << endl;
-            OUTSTREAM << "In the interactive shell, the library used for reading the inputs is not able to capture unicode inputs by default" << endl;
-            OUTSTREAM << "There's a workaround to activate an alternative way to read input. You can activate it using \"unicode\" command. " << endl;
-            OUTSTREAM << "However, if you do so, arrow keys and hotkeys combinations will be disabled. You can disable this input mode again. " << endl;
-            OUTSTREAM << "See \"unicode --help\" for further info." << endl;
+            OUTSTREAM << "A great effort has been done so as to have MEGAcmd support non-ASCII characters." << std::endl;
+            OUTSTREAM << "However, it might still be consider in an experimantal state. You might experiment some issues." << std::endl;
+            OUTSTREAM << "If that is the case, do not hesistate to contact us so as to improve our support." << std::endl;
+            OUTSTREAM << std::endl;
+            OUTSTREAM << "Known issues: " << std::endl;
+            OUTSTREAM << std::endl;
+            OUTSTREAM << "In Windows, when executing a client command in non-interactive mode or the interactive shell " << std::endl;
+            OUTSTREAM << "Some symbols might not be printed. This is something expected, since your terminal (PowerShell/Command Prompt)" << std::endl;
+            OUTSTREAM << "is not able to draw those symbols. However you can use the non-interactive mode to have the output " << std::endl;
+            OUTSTREAM << "written into a file and open it with a graphic editor that supports them. The file will be UTF-8 encoded." << std::endl;
+            OUTSTREAM << "To do that, use \"-o outputfile\" with your mega-*.bat commands. (See \"help --non-interactive\")." << std::endl;
+            OUTSTREAM << "Please, restrain using \"> outputfile\" or piping the output into another command if you require unicode support" << std::endl;
+            OUTSTREAM << "because for instance, when piping, your terminal does not treat the output as binary; " << std::endl;
+            OUTSTREAM << "it will meddle with the encoding, resulting in unusable output." << std::endl;
+            OUTSTREAM << std::endl;
+            OUTSTREAM << "In the interactive shell, the library used for reading the inputs is not able to capture unicode inputs by default" << std::endl;
+            OUTSTREAM << "There's a workaround to activate an alternative way to read input. You can activate it using \"unicode\" command. " << std::endl;
+            OUTSTREAM << "However, if you do so, arrow keys and hotkeys combinations will be disabled. You can disable this input mode again. " << std::endl;
+            OUTSTREAM << "See \"unicode --help\" for further info." << std::endl;
         }
 #endif
         else
         {
-            OUTSTREAM << "Here is the list of available commands and their usage" << endl;
-            OUTSTREAM << "Use \"help -f\" to get a brief description of the commands" << endl;
-            OUTSTREAM << "You can get further help on a specific command with \"command\" --help " << endl;
-            OUTSTREAM << "Alternatively, you can use \"help\" -ff to get a complete description of all commands" << endl;
-            OUTSTREAM << "Use \"help --non-interactive\" to learn how to use MEGAcmd with scripts" << endl;
-            OUTSTREAM << "Use \"help --upgrade\" to learn about the limitations and obtaining PRO accounts" << endl;
+            OUTSTREAM << "Here is the list of available commands and their usage" << std::endl;
+            OUTSTREAM << "Use \"help -f\" to get a brief description of the commands" << std::endl;
+            OUTSTREAM << "You can get further help on a specific command with \"command\" --help " << std::endl;
+            OUTSTREAM << "Alternatively, you can use \"help\" -ff to get a complete description of all commands" << std::endl;
+            OUTSTREAM << "Use \"help --non-interactive\" to learn how to use MEGAcmd with scripts" << std::endl;
+            OUTSTREAM << "Use \"help --upgrade\" to learn about the limitations and obtaining PRO accounts" << std::endl;
 
-            OUTSTREAM << endl << "Commands:" << endl;
+            OUTSTREAM << std::endl << "Commands:" << std::endl;
 
             printAvailableCommands(getFlag(&clflags,"f"));
-            OUTSTREAM << endl << "Verbosity: You can increase the amount of information given by any command by passing \"-v\" (\"-vv\", \"-vvv\", ...)" << endl;
+            OUTSTREAM << std::endl << "Verbosity: You can increase the amount of information given by any command by passing \"-v\" (\"-vv\", \"-vvv\", ...)" << std::endl;
         }
         return;
     }
@@ -2574,7 +2574,7 @@ static bool process_line(char* l)
             else
             {
                 //Do nth, ask again
-                OUTSTREAM << "Please enter [y]es/[n]o/[a]ll/none: " << flush;
+                OUTSTREAM << "Please enter [y]es/[n]o/[a]ll/none: " << std::flush;
             }
         break;
         case LOGINPASSWORD:
@@ -2603,7 +2603,7 @@ static bool process_line(char* l)
                 break;
             }
             oldpasswd = l;
-            OUTSTREAM << endl;
+            OUTSTREAM << std::endl;
             setprompt(NEWPASSWORD);
             break;
         }
@@ -2615,7 +2615,7 @@ static bool process_line(char* l)
                 break;
             }
             newpasswd = l;
-            OUTSTREAM << endl;
+            OUTSTREAM << std::endl;
             setprompt(PASSWORDCONFIRM);
         }
         break;
@@ -2628,11 +2628,11 @@ static bool process_line(char* l)
             }
             if (l != newpasswd)
             {
-                OUTSTREAM << endl << "New passwords differ, please try again" << endl;
+                OUTSTREAM << std::endl << "New passwords differ, please try again" << std::endl;
             }
             else
             {
-                OUTSTREAM << endl;
+                OUTSTREAM << std::endl;
                 if (!cmdexecuter->signingup)
                 {
                     cmdexecuter->changePassword(oldpasswd.c_str(), newpasswd.c_str());
@@ -2900,13 +2900,13 @@ void megacmd()
                     {
                         if (megaCmdListener->getRequest()->getNumber() != MEGACMD_CODE_VERSION)
                         {
-                            os << "---------------------------------------------------------------------" << endl;
-                            os << "--        There is a new version available of megacmd: " << setw(12) << left << megaCmdListener->getRequest()->getName() << "--" << endl;
-                            os << "--        Please, download it from https://mega.nz/cmd             --" << endl;
+                            os << "---------------------------------------------------------------------" << std::endl;
+                            os << "--        There is a new version available of megacmd: " << std::setw(12) << std::left << megaCmdListener->getRequest()->getName() << "--" << std::endl;
+                            os << "--        Please, download it from https://mega.nz/cmd             --" << std::endl;
 #if defined(__APPLE__)
-                            os << "--        Before installing enter \"exit\" to close MEGAcmd          --" << endl;
+                            os << "--        Before installing enter \"exit\" to close MEGAcmd          --" << std::endl;
 #endif
-                            os << "---------------------------------------------------------------------" << endl;
+                            os << "---------------------------------------------------------------------" << std::endl;
                         }
                     }
                     message=os.str();
@@ -3012,7 +3012,7 @@ void printCenteredLine(string msj, unsigned int width, bool encapsulated = true)
         COUT << " ";
     if (encapsulated)
         COUT << "|";
-    COUT << endl;
+    COUT << std::endl;
 }
 
 void printWelcomeMsg()
@@ -3023,12 +3023,12 @@ void printWelcomeMsg()
         width--;
 #endif
 
-    COUT << endl;
+    COUT << std::endl;
     COUT << ".";
     for (unsigned int i = 0; i < width; i++)
         COUT << "=" ;
     COUT << ".";
-    COUT << endl;
+    COUT << std::endl;
     printCenteredLine(" __  __ _____ ____    _                      _ ",width);
     printCenteredLine("|  \\/  | ___|/ ___|  / \\   ___ _ __ ___   __| |",width);
     printCenteredLine("| |\\/| | \\  / |  _  / _ \\ / __| '_ ` _ \\ / _` |",width);
@@ -3039,14 +3039,14 @@ void printWelcomeMsg()
     for (unsigned int i = 0; i < width; i++)
         COUT << " " ;
     COUT << "|";
-    COUT << endl;
+    COUT << std::endl;
     printCenteredLine("SERVER",width);
 
     COUT << "`";
     for (unsigned int i = 0; i < width; i++)
         COUT << "=" ;
     COUT << "´";
-    COUT << endl;
+    COUT << std::endl;
 
 }
 
@@ -3146,7 +3146,7 @@ string getLocaleCode()
 
     try
      {
-        locale l("");
+	std::locale l("");
 
         string ls = l.name();
         size_t posequal = ls.find("=");
@@ -3336,7 +3336,7 @@ int main(int argc, char* argv[])
     if (!ConfigurationManager::session.empty())
     {
         loginInAtStartup = true;
-        stringstream logLine;
+	std::stringstream logLine;
         logLine << "login " << ConfigurationManager::session;
         LOG_debug << "Executing ... " << logLine.str();
         process_line((char*)logLine.str().c_str());
